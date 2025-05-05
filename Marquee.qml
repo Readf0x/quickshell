@@ -9,12 +9,15 @@ Item {
   property alias text: scrollingText.text
   property alias color: scrollingText.color
 
+  property alias speed: scroller.interval
+  property alias pauseTime: pauseTimer.interval
+
   onTextChanged: {
     scrollingText.x = 0
     tempX = 0
     if (scrollingText.width > marqueeText.width) {
-      timer.running = false
-      timer.direction = false
+      scroller.running = false
+      scroller.direction = false
       pauseTimer.running = true
     }
   }
@@ -30,14 +33,14 @@ Item {
   }
 
   Timer {
-    id: timer
+    id: scroller
     interval: 200
-    running: scrollingText.width > marqueeText.width
+    running: false
     repeat: true
 
     // true = move right
     // false = move left
-    property bool direction: true
+    property bool direction: false
 
     onTriggered: {
       marqueeText.tempX = marqueeText.tempX + (direction ? 5 : -5)
@@ -45,7 +48,7 @@ Item {
 
       if (marqueeText.tempX + marqueeText.width > scrollingText.width ||
           marqueeText.tempX <= 0) {
-        timer.running = false
+        scroller.running = false
         pauseTimer.running = true
       }
     }
@@ -53,12 +56,12 @@ Item {
 
   Timer {
     id: pauseTimer
-    interval: 500
-    running: false
+    interval: 750
+    running: scrollingText.width > marqueeText.width
     repeat: false
     onTriggered: {
-      timer.direction = !timer.direction
-      timer.running = true
+      scroller.direction = !scroller.direction
+      scroller.running = true
     }
   }
 }

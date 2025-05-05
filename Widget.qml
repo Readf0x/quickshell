@@ -10,8 +10,8 @@ Rectangle {
 
   clip: true
 
-  width: 50
   height: parent.height - 2
+  width: height
 
   Item {
     id: container

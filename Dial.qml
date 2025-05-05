@@ -9,6 +9,11 @@ Rectangle {
 
   property var wheelUp: ()=>{}
   property var wheelDown: ()=>{}
+  property bool offset: false
+
+  function getColor(index) {
+    return (index + offset) % 2 ? Colors.foreground : Colors.background
+  }
 
   MouseArea {
     anchors.fill: parent
@@ -19,21 +24,32 @@ Rectangle {
       } else if (ev.angleDelta.y < 0) {
         root.wheelDown()
       }
+      root.offset = !root.offset
     }
   }
 
   Column {
     anchors.fill: parent
-    anchors.margins: 1
-    spacing: 1
+    anchors.leftMargin: 1
+    anchors.rightMargin: 1
 
     Repeater {
-      model: 6
+      model: 13
       Rectangle {
         width: 4
         height: 1
-        color: Colors.foreground
+        color: getColor(index)
       }
+    }
+  }
+
+  Rectangle {
+    anchors.fill: parent
+    opacity: 0.5
+    gradient: Gradient {
+      GradientStop { position: 0.0; color: Colors.background }
+      GradientStop { position: 0.5; color: Colors.foreground }
+      GradientStop { position: 1.0; color: Colors.background }
     }
   }
 }

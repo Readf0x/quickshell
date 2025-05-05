@@ -1,4 +1,5 @@
 import QtQuick
+import QtQuick.Layouts
 
 Rectangle {
   id: root
@@ -6,29 +7,32 @@ Rectangle {
   color: Colors.background
   width: 41; height: 13
 
-  Row {
-    anchors.fill: parent
-    anchors.margins: 1
-
-    spacing: 1
+  GridLayout {
+    rows: 4; columns: 10
+    rowSpacing: 1; columnSpacing: 1
+    uniformCellWidths: true; uniformCellHeights: true
+    width: 39; height: 11
+    anchors.centerIn: parent
 
     Repeater {
-      model: 10
+      model: 4
 
-      Column {
-        width: 3; height: 11
-        spacing: 1
+      Repeater {
+        model: 10
 
-        property int bar: index
+        property int row: index
 
-        Repeater {
-          model: 4
-
+        Column {
+          width: 3
+          // height: Cava.heights[index][row]
+          height: 2
           Rectangle {
-            width: parent.width
-            height: 2
-
-            color: Cava.cava[bar]
+            width: 3; height: 1
+            color: Cava.colors[index][row][0]
+          }
+          Rectangle {
+            width: 3; height: 1
+            color: Cava.colors[index][row][1]
           }
         }
       }
