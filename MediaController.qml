@@ -17,7 +17,7 @@ Row {
         duration: 5000
         loops: Animation.Infinite
         from: 0; to: 360
-        paused: Media.player.playbackState == MprisPlaybackState.Paused
+        paused: Media.player.playbackState == MprisPlaybackState.Paused && Media.player
       }
     }
   }
@@ -49,7 +49,7 @@ Row {
           if (p) {
             return p.trackTitle || p.identity || p.metadata.url || "No Info Listed"
           }
-          return "Nothing is playing"
+          return "No Media"
         }
 
         width: 140
@@ -85,7 +85,7 @@ Row {
         duration: 7500
         loops: Animation.Infinite
         from: 0; to: 360
-        paused: Media.player.playbackState == MprisPlaybackState.Paused
+        paused: Media.player.playbackState == MprisPlaybackState.Paused && Media.player
       }
     }
   }
