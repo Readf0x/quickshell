@@ -6,6 +6,13 @@ Row {
   anchors.horizontalCenter: parent.horizontalCenter
   spacing: 2
 
+  function checkMedia(p) {
+    if (p == null) {
+      return true
+    }
+    return p.playbackState == MprisPlaybackState.Paused
+  }
+
   Widget {
     color: Colors.foreground
 
@@ -17,7 +24,7 @@ Row {
         duration: 5000
         loops: Animation.Infinite
         from: 0; to: 360
-        paused: Media.player.playbackState == MprisPlaybackState.Paused && Media.player
+        paused: checkMedia(Media.player)
       }
     }
   }
@@ -85,7 +92,7 @@ Row {
         duration: 7500
         loops: Animation.Infinite
         from: 0; to: 360
-        paused: Media.player.playbackState == MprisPlaybackState.Paused && Media.player
+        paused: checkMedia(Media.player)
       }
     }
   }
