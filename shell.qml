@@ -1,5 +1,6 @@
 import Quickshell
 import QtQuick
+import QtQuick.Layouts
 
 ShellRoot {
   PanelWindow {
@@ -33,6 +34,23 @@ ShellRoot {
       height: 32; width: childrenRect.width
       anchors.right: parent.right; anchors.rightMargin: 2
       spacing: 2
+
+      MonitorContainer {
+        Monitor {
+          type: "input"
+        }
+        Monitor {
+          type: "network"
+        }
+        Monitor {
+          type: "temp"
+          level: System.temp
+        }
+        Monitor {
+          type: "battery"
+          level: System.battery
+        }
+      }
 
       AudioWidget {}
 

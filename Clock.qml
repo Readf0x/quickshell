@@ -18,10 +18,10 @@ Widget {
   }
   Item {
     anchors.centerIn: parent
-    width: 2; height: 16
+    width: 2; height: 18
 
     Rectangle {
-      width: 2; height: 8
+      width: 2; height: 10
       color: Colors.foreground
     }
 

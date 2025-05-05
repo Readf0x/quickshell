@@ -13,7 +13,7 @@ Widget {
       color: Colors.background
       Row {
         Image {
-          source: "./output-large.png"
+          source: Audio.sink.audio.muted ? "./output-muted-large.png" : "./output-large.png"
         }
         ProgressBar {
           y: 1; segments: 11
@@ -26,7 +26,7 @@ Widget {
       color: Colors.background
       Row {
         Image {
-          source: "./input-large.png"
+          source: Audio.source.audio.muted ? "./input-muted-large.png" : "./input-large.png"
         }
         ProgressBar {
           y: 1; segments: 11
