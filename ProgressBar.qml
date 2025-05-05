@@ -26,7 +26,16 @@ Rectangle {
         width: 4
         height: parent.height
 
-        color: segments * progress > index ? Colors.orange : Colors.light_gray
+        color: processColors()
+
+        function processColors() {
+          if (progress > 1 && progress <= 2) {
+            return segments * (progress - 1) > index ? Colors.red : Colors.orange
+          } else if (progress > 2) {
+            return segments * (progress - 2) > index ? Colors.blue : Colors.red
+          }
+          return segments * progress > index ? Colors.orange : Colors.light_gray
+        }
       }
     }
   }

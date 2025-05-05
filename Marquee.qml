@@ -13,17 +13,17 @@ Item {
   property alias pauseTime: pauseTimer.interval
 
   onTextChanged: {
+    scroller.running = false
     scrollingText.x = 0
     tempX = 0
     if (scrollingText.width > marqueeText.width) {
-      scroller.running = false
       scroller.direction = false
       pauseTimer.running = true
     }
   }
 
   Text {
-    x: marqueeText.tempX
+    x: tempX
     id: scrollingText
 
     color: Colors.foreground
@@ -43,11 +43,16 @@ Item {
     property bool direction: false
 
     onTriggered: {
-      marqueeText.tempX = marqueeText.tempX + (direction ? 5 : -5)
-      scrollingText.x = -marqueeText.tempX;
+      if (scrollingText.width < marqueeText.width) {
+        scrollingText.x = 0
+        tempX = 0
+        scroller.running = false
+      }
+      tempX = tempX + (direction ? 5 : -5)
+      scrollingText.x = -tempX;
 
-      if (marqueeText.tempX + marqueeText.width > scrollingText.width ||
-          marqueeText.tempX <= 0) {
+      if (tempX + marqueeText.width > scrollingText.width ||
+          tempX <= 0) {
         scroller.running = false
         pauseTimer.running = true
       }
