@@ -2,7 +2,7 @@ import QtQuick
 import Quickshell.Hyprland
 
 Widget {
-  width: 64
+  width: 86
 
   Row {
     spacing: 2
@@ -12,11 +12,11 @@ Widget {
       model: 10
       
       Rectangle {
-        width: 4; height: 22
+        width: 6; height: 22
         color: Colors.light_gray
 
         Rectangle {
-          width: 2; height: 22; x: 1
+          width: 2; height: 22; x: 2
           color: Hyprland.focusedWorkspace.id == index + 1 ? Colors.foreground : "transparent"
         }
       }

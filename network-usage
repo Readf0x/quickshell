@@ -1,0 +1,8 @@
+#!/usr/bin/env zsh
+
+x1=$(($(cat /sys/class/net/$1/statistics/rx_bytes) + $(cat /sys/class/net/$1/statistics/rx_bytes) / 2))
+sleep 0.5
+x2=$(($(cat /sys/class/net/$1/statistics/rx_bytes) + $(cat /sys/class/net/$1/statistics/rx_bytes) / 2))
+
+print $(($x2 - $x1))
+

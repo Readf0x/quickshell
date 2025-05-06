@@ -7,6 +7,17 @@ Widget {
   }
   Item {
     anchors.centerIn: parent
+    width: 1; height: 24
+
+    Rectangle {
+      width: 1; height: 12
+      color: Colors.red
+    }
+
+    rotation: Time.date.getSeconds() * 6
+  }
+  Item {
+    anchors.centerIn: parent
     width: 2; height: 24
 
     Rectangle {
@@ -21,7 +32,7 @@ Widget {
     width: 2; height: 18
 
     Rectangle {
-      width: 2; height: 10
+      width: 2; height: 9
       color: Colors.foreground
     }
 

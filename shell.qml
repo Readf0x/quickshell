@@ -1,6 +1,5 @@
 import Quickshell
 import QtQuick
-import QtQuick.Layouts
 
 ShellRoot {
   PanelWindow {
@@ -41,14 +40,16 @@ ShellRoot {
         }
         Monitor {
           type: "network"
+          level: System.networkSpeed / 10000
         }
         Monitor {
           type: "temp"
-          level: System.temp
+          level: System.temp / 70
         }
+        // [TODO] Red battery on low
         Monitor {
-          type: "battery"
-          level: System.battery
+          type: System.battery.timeToEmpty == 0 ? "battery-charging" : "battery"
+          level: System.battery.percentage
         }
       }
 

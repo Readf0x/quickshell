@@ -47,14 +47,15 @@ Item {
         scrollingText.x = 0
         tempX = 0
         scroller.running = false
-      }
-      tempX = tempX + (direction ? 5 : -5)
-      scrollingText.x = -tempX;
+      } else {
+        tempX = tempX + (direction ? 5 : -5)
+        scrollingText.x = -tempX;
 
-      if (tempX + marqueeText.width > scrollingText.width ||
-          tempX <= 0) {
-        scroller.running = false
-        pauseTimer.running = true
+        if (tempX + marqueeText.width > scrollingText.width ||
+            tempX <= 0) {
+          scroller.running = false
+          pauseTimer.running = true
+        }
       }
     }
   }
