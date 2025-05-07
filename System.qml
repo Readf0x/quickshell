@@ -25,7 +25,7 @@ Singleton {
 
   Process {
     id: net
-    command: [`/home/${user}/.config/quickshell/network-usage`, "wlp61s0"]
+    command: [`/home/${user}/.config/quickshell/network-usage`]
     running: false
     // stderr: SplitParser {
     //   onRead: data => console.log(data)

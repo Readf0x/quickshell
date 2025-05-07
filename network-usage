@@ -1,8 +1,9 @@
 #!/usr/bin/env zsh
 
-x1=$(($(cat /sys/class/net/$1/statistics/rx_bytes) + $(cat /sys/class/net/$1/statistics/rx_bytes) / 2))
+nic=$(ip -o -4 route show to default | head -n 1 | sed -rn 's/.*dev ([^ ]*).*/\1/p')
+x1=$(($(cat /sys/class/net/$nic/statistics/rx_bytes) + $(cat /sys/class/net/$nic/statistics/rx_bytes) / 2))
 sleep 0.5
-x2=$(($(cat /sys/class/net/$1/statistics/rx_bytes) + $(cat /sys/class/net/$1/statistics/rx_bytes) / 2))
+x2=$(($(cat /sys/class/net/$nic/statistics/rx_bytes) + $(cat /sys/class/net/$nic/statistics/rx_bytes) / 2))
 
 print $(($x2 - $x1))
 
