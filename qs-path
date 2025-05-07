@@ -1,0 +1,1 @@
+export QS_CONFIG_PATH=$(pwd)

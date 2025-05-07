@@ -13,7 +13,7 @@ Widget {
       
       Rectangle {
         width: 6; height: 22
-        color: Colors.light_gray
+        color: Hyprland.workspaces.values.find(h => h.id == index + 1) != undefined ? Colors.light_gray : "transparent"
 
         Rectangle {
           width: 2; height: 22; x: 2
