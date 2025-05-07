@@ -4,6 +4,7 @@ Widget {
   width: 44
   Image {
     source: "./markers.png"
+    anchors.centerIn: parent
   }
   Item {
     anchors.centerIn: parent

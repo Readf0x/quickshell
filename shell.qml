@@ -1,9 +1,10 @@
+//@ pragma UseQApplication
 import Quickshell
 import QtQuick
 
 ShellRoot {
   PanelWindow {
-    id: window
+    id: root
     color: "transparent"
 
     anchors {
@@ -16,6 +17,8 @@ ShellRoot {
 
     // Left Aligned
     Row {
+      id: right
+
       height: 32; width: childrenRect.width
       anchors.left: parent.left; anchors.leftMargin: 2
       spacing: 2
@@ -23,21 +26,44 @@ ShellRoot {
       Workspaces {}
 
       Calendar {}
+
+      Tray {}
+    }
+
+    Rectangle {
+      color: Colors.foreground
+      anchors.left: right.right
+      anchors.right: middle.left
+      y: 16
+      anchors.margins: 4
+
+      height: 2
     }
 
     // Center Aligned
-    MediaController {}
+    MediaController {
+      id: middle
+    }
+
+    Rectangle {
+      color: Colors.foreground
+      anchors.left: middle.right
+      anchors.right: left.left
+      y: 16
+      anchors.margins: 4
+
+      height: 2
+    }
 
     // Right Aligned
     Row {
+      id: left
+
       height: 32; width: childrenRect.width
       anchors.right: parent.right; anchors.rightMargin: 2
       spacing: 2
 
       MonitorContainer {
-        Monitor {
-          type: "input"
-        }
         Monitor {
           type: "network"
           level: System.networkSpeed / 10000
