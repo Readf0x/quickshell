@@ -17,7 +17,7 @@ Widget {
         }
         ProgressBar {
           y: 1; segments: 10
-          progress: Debug.log(Audio.sink?.audio.volume.toFixed(2)) || 0
+          progress: Audio.sink?.audio.volume.toFixed(2) || 0
         }
       }
     }
