@@ -75,7 +75,7 @@ ShellRoot {
         // [TODO] Red battery on low
         Loader {
           active: System.battery != null
-          Monitor {
+          sourceComponent: Monitor {
             type: System.battery?.timeToEmpty == 0 ? "battery-charging" : "battery"
             level: System.battery?.percentage || 0
           }

@@ -8,16 +8,18 @@ import QtQuick
 Singleton {
   id: root
   property UPowerDevice battery: UPower.devices.values.find(dev=>dev.isLaptopBattery)
-  property int temp: Number(thermal_zone.text()) / 1000
+  property int temp: 0
   property int networkSpeed: 0
   property string user: ""
 
-  FileView {
-    id: thermal_zone
-    path: Qt.resolvedUrl("/sys/class/thermal/thermal_zone0/temp")
-    watchChanges: true
-    onFileChanged: {
-      this.reload()
+  Process {
+    id: temperature
+    command: [`/home/${user}/.config/quickshell/temperature`]
+    running: false
+    stdout: SplitParser {
+      onRead: data => {
+        temp = Number(data) / 1000
+      }
     }
   }
 
@@ -52,6 +54,9 @@ Singleton {
     interval: 1000
     running: false
     repeat: true
-    onTriggered: net.running = true
+    onTriggered: {
+      net.running = true
+      temperature.running = true
+    }
   }
 }

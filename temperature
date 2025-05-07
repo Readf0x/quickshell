@@ -1,0 +1,10 @@
+#!/usr/bin/env zsh
+
+temps=($(cat /sys/class/thermal/thermal_zone*/temp))
+
+if [[ ${temps[(Ie)20000]} != 0 ]]; then
+  bugged=true
+fi
+
+print $(( (${(j: + :)temps}$([[ $bugged ]] && print ' - 20000')) / (${#temps}$([[ $bugged ]] && print ' - 1')) ))
+
