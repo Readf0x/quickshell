@@ -78,7 +78,7 @@ Row {
 
       ProgressBar {
         segments: 26
-        progress: Media.player.position / Media.player.length
+        progress: Media.player?.position / Media.player?.length
       }
     }
   }

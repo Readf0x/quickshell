@@ -17,7 +17,7 @@ Widget {
 
         Rectangle {
           width: 2; height: 22; x: 2
-          color: Hyprland.focusedWorkspace.id == index + 1 ? Colors.foreground : "transparent"
+          color: Hyprland.focusedWorkspace?.id == index + 1 ? Colors.foreground : "transparent"
         }
       }
     }

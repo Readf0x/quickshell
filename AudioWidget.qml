@@ -13,11 +13,11 @@ Widget {
       color: Colors.background
       Row {
         Image {
-          source: Audio.sink.audio.muted ? "./output-muted-large.png" : "./output-large.png"
+          source: Audio.sink?.audio.muted ? "./output-muted-large.png" : "./output-large.png"
         }
         ProgressBar {
           y: 1; segments: 11
-          progress: Audio.sink.audio.volume
+          progress: Audio.sink?.audio.volume || 0
         }
       }
     }
@@ -26,11 +26,11 @@ Widget {
       color: Colors.background
       Row {
         Image {
-          source: Audio.source.audio.muted ? "./input-muted-large.png" : "./input-large.png"
+          source: Audio.source?.audio.muted ? "./input-muted-large.png" : "./input-large.png"
         }
         ProgressBar {
           y: 1; segments: 11
-          progress: Audio.source.audio.volume
+          progress: Audio.source?.audio.volume || 0
         }
       }
     }

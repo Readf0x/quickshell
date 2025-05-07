@@ -13,6 +13,7 @@ WrapWidget {
         required property var modelData
         IconImage {
           anchors.centerIn: parent
+          // [TODO] filter icons and replace with ones that match the theme
           source: modelData.icon
           implicitSize: 18
         }

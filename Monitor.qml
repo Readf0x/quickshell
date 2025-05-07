@@ -14,7 +14,7 @@ Rectangle {
       height: 8; width: 8
       Image {
         anchors.centerIn: parent
-        source: `./${type}.png`
+        source: type && `./${type}.png`
       }
     }
     Repeater {

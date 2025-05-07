@@ -48,7 +48,7 @@ Singleton {
   }
 
   Timer {
-    running: player.playbackState == MprisPlaybackState.Playing
+    running: player?.playbackState == MprisPlaybackState.Playing
     interval: 1000
     repeat: true
     onTriggered: player.positionChanged()
