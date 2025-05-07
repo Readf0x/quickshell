@@ -3,8 +3,8 @@ pragma Singleton
 import Quickshell
 
 Singleton {
-  function log(v) {
-    console.log(v)
+  function log(v: var, msg: string): void {
+    console.log(`${msg ? msg + " " : ''}${v}`)
     return v
   }
 }
