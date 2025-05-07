@@ -30,11 +30,11 @@ Rectangle {
 
         function processColors() {
           if (progress > 1 && progress <= 2) {
-            return segments * (progress - 1) > index + 1 ? Colors.red : Colors.orange
+            return segments * (progress - 1) >= index + 1 ? Colors.red : Colors.orange
           } else if (progress > 2) {
-            return segments * (progress - 2) > index + 1 ? Colors.blue : Colors.red
+            return segments * (progress - 2) >= index + 1 ? Colors.blue : Colors.red
           }
-          return segments * progress > index + 1 ? Colors.orange : Colors.light_gray
+          return segments * progress >= index + 1 ? Colors.orange : Colors.light_gray
         }
       }
     }

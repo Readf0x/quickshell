@@ -73,9 +73,12 @@ ShellRoot {
           level: System.temp / 70
         }
         // [TODO] Red battery on low
-        Monitor {
-          type: System.battery?.timeToEmpty == 0 ? "battery-charging" : "battery"
-          level: System.battery?.percentage || 0
+        Loader {
+          active: System.battery != null
+          Monitor {
+            type: System.battery?.timeToEmpty == 0 ? "battery-charging" : "battery"
+            level: System.battery?.percentage || 0
+          }
         }
       }
 
