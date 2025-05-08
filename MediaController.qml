@@ -66,7 +66,7 @@ Row {
           return "No Media"
         }
 
-        width: 139 - albumArt.width
+        width: 140 - albumArt.width - (albumArt.width ? 1 : 0)
       }
       
       Equalizer {}
