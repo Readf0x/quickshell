@@ -30,7 +30,7 @@ Row {
   }
 
   Widget {
-    width: 194
+    width: 193
     color: Colors.foreground
 
     Row {
@@ -46,6 +46,13 @@ Row {
         }
       }
 
+      Image {
+        id: albumArt
+        height: 13
+        fillMode: Image.PreserveAspectFit
+        source: Media.player.trackArtUrl
+      }
+
       Marquee {
         id: mediaText
         y: 1
@@ -59,7 +66,7 @@ Row {
           return "No Media"
         }
 
-        width: 140
+        width: 139 - albumArt.width
       }
       
       Equalizer {}
