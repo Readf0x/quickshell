@@ -50,7 +50,7 @@ Singleton {
 
   Process {
     running: true
-    command: ["cava", "-p", "/home/readf0x/.config/cava/shell.conf"]
+    command: ["cava", "-p", "/home/readf0x/.config/quickshell/cava.conf"]
     stdout: SplitParser {
       onRead: data => {
         root.cava = data.split(";").filter(s=>s!='').map(i=>Number(i))
