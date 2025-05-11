@@ -10,11 +10,11 @@ Singleton {
   property UPowerDevice battery: UPower.devices.values.find(dev=>dev.isLaptopBattery)
   property int temp: 0
   property int networkSpeed: 0
-  property string user: ""
+  property string cwd: ""
 
   Process {
     id: temperature
-    command: [`/home/${user}/.config/quickshell/temperature`]
+    command: [`${cwd}/temperature`]
     running: false
     stdout: SplitParser {
       onRead: data => {
@@ -25,7 +25,7 @@ Singleton {
 
   Process {
     id: net
-    command: [`/home/${user}/.config/quickshell/network-usage`]
+    command: [`${cwd}/network-usage`]
     running: false
     // stderr: SplitParser {
     //   onRead: data => console.log(data)
@@ -38,11 +38,11 @@ Singleton {
   }
 
   Process {
-    command: ["whoami"]
+    command: ["pwd"]
     running: true
     stdout: SplitParser {
       onRead: d => {
-        user = d
+        cwd = Debug.log(d)
         net.running = true
         timer.running = true
       }
