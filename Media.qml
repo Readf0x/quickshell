@@ -38,13 +38,7 @@ Singleton {
   }
 
   onPlayersChanged: {
-    if (Mpris.players.values.length != 0) {
-      if (! Mpris.players.values.includes(player)) {
-        player = Mpris.players.values[index > Mpris.players.values.length - 1 ? Mpris.players.values.length - 1 : index]
-      }
-    } else {
-      player = null
-    }
+    player = players[players.length - 1]
   }
 
   Timer {
