@@ -5,7 +5,7 @@ import QtQuick
 ShellRoot {
   PanelWindow {
     id: root
-    color: "transparent"
+    color: Debug.loadDebugBecauseQuickshellHasSuperLazySingletonEvaluationAndTheIpcHandlerDoesntAppearOtherwise("transparent")
 
     anchors {
       top: true
