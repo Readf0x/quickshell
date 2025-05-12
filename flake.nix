@@ -47,7 +47,7 @@
         ];
 
         shellHook = ''
-          export QS_CONFIG_PATH=$(pwd)
+          export QS_CONFIG_PATH="$(pwd)/src"
         '';
       };
     });
