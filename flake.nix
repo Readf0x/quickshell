@@ -44,6 +44,11 @@
           quickshell.packages.${system}.default
         ];
 
+        QML2_IMPORT_PATH = lib.makeSearchPath "lib/qt-6/qml" [
+          "${quickshell.packages.${system}.default}"
+          "${pkgs.kdePackages.full}"
+        ];
+
         shellHook = ''
           export QS_CONFIG_PATH=$(pwd)
         '';
