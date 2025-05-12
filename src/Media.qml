@@ -8,9 +8,9 @@ import QtQuick
 Singleton {
   id: root
 
+  property int index: 0
   property list<MprisPlayer> players: Mpris.players.values
   property MprisPlayer player: Mpris.players.values[index]
-  property int index: 0
 
   function nextPlayer(dir = true) {
     if (dir && index == players.length - 1) {
@@ -18,7 +18,7 @@ Singleton {
     } else if (!dir && index == 0) {
       player = players[players.length - 1]
     } else {
-      player = players[players.indexOf(player) + (dir ? 1 : -1)]
+      player = players[index + (dir ? 1 : -1)]
     }
     index = Mpris.players.indexOf(player)
   }
