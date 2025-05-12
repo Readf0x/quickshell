@@ -24,10 +24,7 @@
 
         installPhase = ''
           mkdir $out
-          cp -r img $out
-          cp -r scripts $out
-          cp *.qml $out
-          cp cava.conf $out
+          cp -r src/* $out
         '';
       });
       neofuturism-shell = pkgs.writeShellScriptBin "neoshell" ''
