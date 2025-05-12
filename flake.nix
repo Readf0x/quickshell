@@ -38,5 +38,16 @@
       '';
       default = neofuturism-shell;
     });
+    devShells = perSystem ({ pkgs, system }: {
+      default = pkgs.mkShell {
+        packages = [
+          quickshell.packages.${system}.default
+        ];
+
+        shellHook = ''
+          export QS_CONFIG_PATH=$(pwd)
+        '';
+      };
+    });
   };
 }
