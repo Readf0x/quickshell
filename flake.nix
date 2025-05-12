@@ -31,7 +31,9 @@
         '';
       });
       neofuturism-shell = pkgs.writeShellScriptBin "neoshell" ''
-        export QS_CONFIG_PATH=${neofuturism-config}
+        if ! [ $QS_CONFIG_PATH ]; then
+          export QS_CONFIG_PATH=${neofuturism-config}
+        fi
         ${quickshell.packages.${system}.default}/bin/quickshell $@
       '';
       default = neofuturism-shell;
