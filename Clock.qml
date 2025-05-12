@@ -37,6 +37,6 @@ Widget {
       color: Colors.foreground
     }
 
-    rotation: Time.date.getHours() * 30
+    rotation: (Time.date.getHours() + Time.date.getMinutes() / 60) * 30
   }
 }
