@@ -18,7 +18,7 @@ Row {
 
     Image {
       anchors.centerIn: parent
-      source: "./disc1.svg"
+      source: "./img/disc1.svg"
       RotationAnimation on rotation {
         id: disc1
         duration: 5000
@@ -93,7 +93,7 @@ Row {
   Widget {
     Image {
       anchors.centerIn: parent
-      source: "./disc2.svg"
+      source: "./img/disc2.svg"
       RotationAnimation on rotation {
         id: disc2
         duration: 7500

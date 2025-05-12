@@ -23,7 +23,7 @@ Rectangle {
   Image {
     id: img
     anchors.centerIn: parent
-    source: `./${type}.png`
+    source: `./img/${type}.png`
   }
 }
 

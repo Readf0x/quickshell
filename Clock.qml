@@ -3,7 +3,7 @@ import QtQuick
 Widget {
   width: 44
   Image {
-    source: "./markers.png"
+    source: "./img/markers.png"
     anchors.centerIn: parent
   }
   Item {
