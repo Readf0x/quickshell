@@ -14,9 +14,23 @@
     perSystem = package: (lib.listToAttrs (lib.map (a: { name = a; value = package { pkgs = nixpkgs.legacyPackages.${a}; system = a; }; }) (lib.attrNames nixpkgs.legacyPackages)));
   in {
     packages = perSystem ({ pkgs, system }: rec {
+      courier = pkgs.stdenv.mkDerivation (finalAttrs: {
+        pname = "Courier";
+        version = "1.0";
+
+        src = ./fonts;
+
+        dontBuild = true;
+
+        installPhase = ''
+          runHook preInstall
+          install -Dm644 --target $out/share/fonts/truetype ./*.ttf
+          runHook postInstall
+        '';
+      });
       neofuturism-config = pkgs.stdenv.mkDerivation (finalAttrs: {
         pname = "neofuturism-config";
-        version = "v1.0";
+        version = "v1.1";
 
         src = ./.;
 
@@ -31,6 +45,8 @@
         if ! [ $QS_CONFIG_PATH ]; then
           export QS_CONFIG_PATH=${neofuturism-config}
         fi
+        export FONTCONFIG_FILE=${pkgs.makeFontsConf { fontDirectories = [ courier ]; }}
+        export PATH="${lib.makeBinPath [ pkgs.cava ]}:$PATH"
         ${quickshell.packages.${system}.default}/bin/quickshell $@
       '';
       default = neofuturism-shell;
