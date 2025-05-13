@@ -14,7 +14,14 @@ WrapWidget {
         IconImage {
           anchors.centerIn: parent
           // [TODO] filter icons and replace with ones that match the theme
-          source: modelData.icon
+          source: {
+            let icon = modelData.icon
+            if (icon.includes("?path=")) {
+              const [name, path] = icon.split("?path=")
+              icon = `file://${path}/${name.slice(name.lastIndexOf("/") + 1)}`
+            }
+            return icon
+          }
           implicitSize: 18
         }
         MouseArea {
