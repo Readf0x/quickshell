@@ -14,7 +14,7 @@ Singleton {
 
   Process {
     id: temperature
-    command: [`${configPath}/scripts/temperature`]
+    command: [`${root.configPath}/scripts/temperature.bash`]
     running: false
     stdout: SplitParser {
       onRead: data => {
@@ -25,7 +25,7 @@ Singleton {
 
   Process {
     id: net
-    command: [`${configPath}/scripts/network-usage`]
+    command: [`${root.configPath}/scripts/network-usage`]
     running: false
     // stderr: SplitParser {
     //   onRead: data => console.log(data)
