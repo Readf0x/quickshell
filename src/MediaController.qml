@@ -16,11 +16,19 @@ Row {
   Widget {
     color: Colors.foreground
 
+    Rectangle {
+      width: disc1.width
+      height: disc1.height
+      color: Colors.background
+      radius: 180
+      anchors.centerIn: parent
+    }
     Image {
+      id: disc1
       anchors.centerIn: parent
       source: "./img/disc1.svg"
       RotationAnimation on rotation {
-        id: disc1
+        id: disc1Rot
         duration: 5000
         loops: Animation.Infinite
         from: 0; to: 360
@@ -91,11 +99,19 @@ Row {
   }
 
   Widget {
+    Rectangle {
+      width: 22
+      height: 22
+      color: Colors.foreground
+      radius: 180
+      anchors.centerIn: parent
+    }
     Image {
+      id: disc2
       anchors.centerIn: parent
       source: "./img/disc2.svg"
       RotationAnimation on rotation {
-        id: disc2
+        id: disc2Rot
         duration: 7500
         loops: Animation.Infinite
         from: 0; to: 360
