@@ -54,11 +54,23 @@ Row {
         }
       }
 
-      Image {
-        id: albumArt
-        height: 13
-        fillMode: Image.PreserveAspectFit
-        source: Media.player.trackArtUrl
+      Rectangle {
+        width: cassette.width
+        height: cassette.height
+        color: "#514e4c"
+        Image {
+          id: albumArt
+          width: 18
+          height: 8
+          x: 1
+          y: 1
+          fillMode: Image.PreserveAspectCrop
+          source: Media.player.trackArtUrl
+        }
+        Image {
+          id: cassette
+          source: "img/cassette.png"
+        }
       }
 
       Marquee {
@@ -74,7 +86,7 @@ Row {
           return "No Media"
         }
 
-        width: 140 - albumArt.width - (albumArt.width ? 1 : 0)
+        width: 119
       }
       
       Equalizer {}
