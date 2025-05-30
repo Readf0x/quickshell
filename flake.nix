@@ -41,12 +41,14 @@
           cp -r src/* $out
         '';
       });
-      neofuturism-shell = pkgs.writeShellScriptBin "neoshell" ''
+      neofuturism-shell = let
+        dependencies = [ pkgs.cava quickshell.packages.${system}.default ];
+      in pkgs.writeShellScriptBin "neoshell" ''
         if ! [ $QS_CONFIG_PATH ]; then
           export QS_CONFIG_PATH=${neofuturism-config}
         fi
         export FONTCONFIG_FILE=${pkgs.makeFontsConf { fontDirectories = [ courier ]; }}
-        export PATH="${lib.makeBinPath [ pkgs.cava ]}:$PATH"
+        export PATH="${lib.makeBinPath dependencies}:$PATH"
         ${quickshell.packages.${system}.default}/bin/quickshell $@
       '';
       default = neofuturism-shell;
