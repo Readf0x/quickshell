@@ -1,10 +1,20 @@
 import QtQuick
 import Quickshell.Services.Mpris
+import QtQuick.Effects
 
 Row {
   height: 32; width: childrenRect.width
   anchors.horizontalCenter: parent.horizontalCenter
   spacing: 2
+
+  function updateColor() {
+    artProcessor.requestPaint()
+  }
+
+  function rgbaToHex(r, g, b) {
+    const num = (r << 16) + (g << 8) + b;
+    return `#${num.toString(16).padStart(6, "0")}`;
+  }
 
   function checkMedia(p) {
     if (p == null) {
@@ -54,10 +64,44 @@ Row {
         }
       }
 
+      Canvas {
+        id: artProcessor
+        width: 1; height: 1
+
+        property string src: Media.player.trackArtUrl
+        onSrcChanged: {
+          loadImage(src)
+        }
+
+        property color albumColor
+
+        onImageLoaded: {
+          requestPaint()
+        }
+
+        onPaint: {
+          var ctx = getContext("2d")
+
+          console.log(src)
+          ctx.drawImage(src, 0,0,1,1)
+
+          let d = ctx.getImageData(0,0,1,1)
+          let p = d.data
+          albumColor = rgbaToHex(p[0], p[1], p[2])
+        }
+
+        visible: false
+      }
+
       Rectangle {
         width: cassette.width
         height: cassette.height
-        color: "#514e4c"
+        color: Colors.background
+
+        Rectangle {
+          anchors.fill: albumArt
+          color: artProcessor.albumColor
+        }
         Image {
           id: albumArt
           width: 18
@@ -67,9 +111,29 @@ Row {
           fillMode: Image.PreserveAspectCrop
           source: Media.player.trackArtUrl
         }
+
+        Rectangle {
+          color: Colors.foreground
+          width: 2; height: 2
+          x: 5; y: 5
+        }
+        Rectangle {
+          color: Colors.foreground
+          width: 2; height: 2
+          x: 13; y: 5
+        }
+
         Image {
           id: cassette
           source: "img/cassette.png"
+          visible: false
+        }
+        MultiEffect {
+          colorization: 1.0
+          colorizationColor: artProcessor.albumColor
+
+          anchors.fill: cassette
+          source: cassette
         }
       }
 

@@ -8,7 +8,7 @@ import QtQuick
 Singleton {
   id: root
 
-  property int index: 0
+  property int index: Mpris.players.values.length - 1
   property list<MprisPlayer> players: Mpris.players.values
   property MprisPlayer player: Mpris.players.values[index]
 
