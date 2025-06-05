@@ -66,7 +66,7 @@ Row {
 
       Canvas {
         id: artProcessor
-        width: 1; height: 1
+        width: 4; height: 4
 
         property string src: Media.player.trackArtUrl
         onSrcChanged: {
@@ -75,6 +75,36 @@ Row {
           } else {
             loadImage(src)
           }
+        }
+
+        function chunkIntoFours(arr) {
+          const result = []
+          for (let i = 0; i < arr.length; i += 4) {
+            result.push([arr[i],arr[i+1],arr[i+2],arr[i+3]])
+          }
+          return result
+        }
+
+        function highestSaturation(data) {
+          const chunked = chunkIntoFours(data)
+          let sat = chunked.map(arr => {
+            const norm = arr.map(i=>i/255)
+            let max = Math.max(norm[0], norm[1], norm[2])
+            let min = Math.min(norm[0], norm[1], norm[2])
+            let l = (max + min) / 2
+
+            let s
+            if (max === min) { s = 0 }
+            else {
+              let d = max - min
+              s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
+            }
+
+            return s
+          })
+
+          let i = sat.indexOf(Math.max(...sat))
+          return chunked[i]
         }
 
         property color albumColor
@@ -89,10 +119,11 @@ Row {
 
           var ctx = getContext("2d")
 
-          ctx.drawImage(src, 0,0,1,1)
+          ctx.drawImage(src, 0,0,4,4)
 
-          let d = ctx.getImageData(0,0,1,1)
-          let p = d.data
+          let d = ctx.getImageData(0,0,4,4)
+          let p = highestSaturation(d.data)
+          console.log(p)
           albumColor = rgbaToHex(p[0],p[1],p[2])
         }
 
