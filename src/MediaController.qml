@@ -104,9 +104,16 @@ Row {
         height: cassette.height
         color: Colors.background
 
+        property bool showCassette: isMedia(Media.player)
+        function isMedia(p) {
+          if (p != null && p.trackArtUrl != null) { return true }
+          else { return false }
+        }
+
         Rectangle {
           anchors.fill: albumArt
           color: artProcessor.albumColor
+          visible: parent.showCassette
         }
         Image {
           id: albumArt
@@ -116,6 +123,7 @@ Row {
           y: 1
           fillMode: Image.PreserveAspectCrop
           source: Media.player.trackArtUrl
+          visible: parent.showCassette
         }
 
         Rectangle {
@@ -131,8 +139,13 @@ Row {
 
         Image {
           id: cassette
-          source: "img/cassette.png"
+          source: "img/cassette.png" 
           visible: false
+        }
+        Image {
+          id: cassetteEmpty
+          source: "img/cassette-empty.png"
+          visible: !parent.showCassette
         }
         MultiEffect {
           colorization: 1.0
@@ -140,6 +153,7 @@ Row {
 
           anchors.fill: cassette
           source: cassette
+          visible: parent.showCassette
         }
       }
 
