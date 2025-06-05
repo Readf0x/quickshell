@@ -70,24 +70,30 @@ Row {
 
         property string src: Media.player.trackArtUrl
         onSrcChanged: {
-          loadImage(src)
+          if (isImageLoaded(src)) {
+            requestPaint()
+          } else {
+            loadImage(src)
+          }
         }
 
         property color albumColor
+        onAlbumColorChanged: Media.albumColor = albumColor
 
         onImageLoaded: {
           requestPaint()
         }
 
         onPaint: {
+          if (!isImageLoaded(src)) return
+
           var ctx = getContext("2d")
 
-          console.log(src)
           ctx.drawImage(src, 0,0,1,1)
 
           let d = ctx.getImageData(0,0,1,1)
           let p = d.data
-          albumColor = rgbaToHex(p[0], p[1], p[2])
+          albumColor = rgbaToHex(p[0],p[1],p[2])
         }
 
         visible: false

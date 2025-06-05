@@ -11,6 +11,7 @@ Singleton {
   property int index: Mpris.players.values.length - 1
   property list<MprisPlayer> players: Mpris.players.values
   property MprisPlayer player: Mpris.players.values[index]
+  property color albumColor
 
   function nextPlayer(dir = true) {
     if (dir && index == players.length - 1) {
