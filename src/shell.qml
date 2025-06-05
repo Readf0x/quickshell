@@ -25,8 +25,6 @@ ShellRoot {
 
       Workspaces {}
 
-      Calendar {}
-
       Tray {}
     }
 
@@ -83,6 +81,8 @@ ShellRoot {
       }
 
       AudioWidget {}
+
+      Calendar {}
 
       Clock {}
     }
