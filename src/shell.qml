@@ -68,7 +68,7 @@ ShellRoot {
         }
         Monitor {
           type: "temp"
-          level: System.temp / 70
+          level: ((System.temp - 20) / 85) * 100
         }
         // [TODO] Red battery on low
         Loader {

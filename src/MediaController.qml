@@ -123,7 +123,6 @@ Row {
 
           let d = ctx.getImageData(0,0,4,4)
           let p = highestSaturation(d.data)
-          console.log(p)
           albumColor = rgbaToHex(p[0],p[1],p[2])
         }
 
@@ -135,7 +134,7 @@ Row {
         height: cassette.height
         color: Colors.background
 
-        property bool showCassette: isMedia(Media.player)
+        property bool showCassette: isMedia(Media.player) && albumArt.albumColor != "#000000"
         function isMedia(p) {
           if (p != null && p.trackArtUrl != null) { return true }
           else { return false }
