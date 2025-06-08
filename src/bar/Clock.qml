@@ -1,9 +1,11 @@
 import QtQuick
+import "../lib"
+import "../widgets"
 
 Widget {
   width: 44
   Image {
-    source: "./img/markers.png"
+    source: "../img/markers.png"
     anchors.centerIn: parent
   }
   Item {

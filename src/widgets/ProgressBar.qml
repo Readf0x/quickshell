@@ -1,4 +1,5 @@
 import QtQuick
+import "../lib"
 
 Rectangle {
   color: Colors.background

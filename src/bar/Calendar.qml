@@ -1,4 +1,6 @@
 import QtQuick
+import "../lib"
+import "../widgets"
 
 Widget {
   width: 70

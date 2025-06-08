@@ -1,7 +1,8 @@
 import QtQuick
+import "../lib"
 
 Rectangle {
-  color: Colors.foreground
+  color: Colors.background
   border.color: Colors.foreground
   border.width: 2
 
@@ -13,12 +14,11 @@ Rectangle {
   height: parent.height - 2
   width: childrenRect.width + 4
 
-  Row {
+  Item {
     id: container
-    spacing: 2
 
     width: childrenRect.width
-    height: childrenRect.height
+    height: parent.height - 4
 
     x: 2; y: 2
   }

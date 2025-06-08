@@ -1,6 +1,8 @@
 import QtQuick
 import Quickshell.Services.Mpris
 import QtQuick.Effects
+import "../../lib"
+import "../../widgets"
 
 Row {
   height: 32; width: childrenRect.width
@@ -36,7 +38,7 @@ Row {
     Image {
       id: disc1
       anchors.centerIn: parent
-      source: "./img/disc1.svg"
+      source: "../../img/disc1.svg"
       RotationAnimation on rotation {
         id: disc1Rot
         duration: 5000
@@ -169,12 +171,12 @@ Row {
 
         Image {
           id: cassette
-          source: "img/cassette.png" 
+          source: "../../img/cassette.png" 
           visible: false
         }
         Image {
           id: cassetteEmpty
-          source: "img/cassette-empty.png"
+          source: "../../img/cassette-empty.png"
           visible: !parent.showCassette
         }
         MultiEffect {
@@ -235,7 +237,7 @@ Row {
     Image {
       id: disc2
       anchors.centerIn: parent
-      source: "./img/disc2.svg"
+      source: "../../img/disc2.svg"
       RotationAnimation on rotation {
         id: disc2Rot
         duration: 7500

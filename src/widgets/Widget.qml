@@ -1,4 +1,5 @@
 import QtQuick
+import "../lib"
 
 Rectangle {
   color: Colors.background
@@ -11,12 +12,12 @@ Rectangle {
   clip: true
 
   height: parent.height - 2
-  width: childrenRect.width + 4
+  width: height
 
   Item {
     id: container
 
-    width: childrenRect.width
+    width: parent.width - 4
     height: parent.height - 4
 
     x: 2; y: 2

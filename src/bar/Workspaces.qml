@@ -1,5 +1,7 @@
 import QtQuick
 import Quickshell.Hyprland
+import "../lib"
+import "../widgets"
 
 Widget {
   width: 86

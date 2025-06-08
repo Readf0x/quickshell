@@ -2,6 +2,7 @@ import Quickshell
 import Quickshell.Widgets
 import Quickshell.Services.SystemTray
 import QtQuick
+import "../widgets"
 
 WrapWidget {
   Row {

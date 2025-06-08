@@ -1,4 +1,5 @@
 import QtQuick
+import "../../lib"
 
 Rectangle {
   color: Colors.background
@@ -23,7 +24,7 @@ Rectangle {
   Image {
     id: img
     anchors.centerIn: parent
-    source: `./img/${type}.png`
+    source: `../../img/${type}.png`
   }
 }
 

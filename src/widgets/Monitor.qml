@@ -1,4 +1,5 @@
 import QtQuick
+import "../lib"
 
 Rectangle {
   color: Colors.background
@@ -14,7 +15,7 @@ Rectangle {
       height: 8; width: 8
       Image {
         anchors.centerIn: parent
-        source: type && `./img/${type}.png`
+        source: type && `../img/${type}.png`
       }
     }
     Repeater {
