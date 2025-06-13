@@ -6,14 +6,14 @@ Rectangle {
 
   width: 6
   height: 13
-  color: Colors.background
+  color: Colors.light_gray
 
   property var wheelUp: ()=>{}
   property var wheelDown: ()=>{}
   property bool offset: false
 
   function getColor(index) {
-    return (index + offset) % 2 ? Colors.foreground : Colors.background
+    return (index + offset) % 2 ? Colors.foreground : Colors.light_gray
   }
 
   MouseArea {
@@ -48,9 +48,9 @@ Rectangle {
     anchors.fill: parent
     opacity: 0.5
     gradient: Gradient {
-      GradientStop { position: 0.0; color: Colors.background }
+      GradientStop { position: 0.0; color: Colors.light_gray }
       GradientStop { position: 0.5; color: Colors.foreground }
-      GradientStop { position: 1.0; color: Colors.background }
+      GradientStop { position: 1.0; color: Colors.light_gray }
     }
   }
 }

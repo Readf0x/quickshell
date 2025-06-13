@@ -5,7 +5,7 @@ import "../../lib"
 Rectangle {
   id: root
 
-  color: Colors.background
+  color: Colors.light_gray
   width: 41; height: 13
 
   GridLayout {

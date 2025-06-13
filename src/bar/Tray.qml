@@ -34,7 +34,7 @@ WrapWidget {
               case Qt.RightButton: 
                 if (modelData.hasMenu) {
                   const window = QsWindow.window;
-                  // the bellow is kinda hard coded, find a better solution
+                  // [TODO] The bellow is kinda hard coded, find a better solution
                   const widgetRect = window.contentItem.mapFromItem(root, 10, root.height - 10, root.width, root.height);
                   menuAnchor.anchor.rect = widgetRect;
                   menuAnchor.open();

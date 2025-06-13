@@ -9,16 +9,16 @@ Singleton {
 
   property list<int> cava: [0,0,0,0,0,0,0,0,0,0]
   property list<var> colors: [
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
-    [[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background],[Colors.background, Colors.background]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
+    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
   ]
 
   function processColors(color, num) {
@@ -31,9 +31,9 @@ Singleton {
 
     switch (num) {
       case 0:
-        return [Colors.background, Colors.background];
+        return [Colors.light_gray, Colors.light_gray];
       case 1:
-        return [Colors.background, gradient[color]];
+        return [Colors.light_gray, gradient[color]];
       case 2:
         return [gradient[color], gradient[color]];
     }

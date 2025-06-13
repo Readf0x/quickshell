@@ -2,7 +2,7 @@ import QtQuick
 import "../../lib"
 
 Rectangle {
-  color: Colors.background
+  color: Colors.light_gray
   width: 10; height: 10
 
   property string type

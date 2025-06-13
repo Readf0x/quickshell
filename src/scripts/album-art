@@ -1,0 +1,12 @@
+#!/usr/bin/env zsh
+
+if grep -e '^http' /tmp/coverUrl; then
+  wget -O /tmp/cover.png $(cat /tmp/coverUrl)
+elif grep -e '^data' /tmp/coverUrl &> /dev/null; then
+  grep -o '[^,]*$' /tmp/coverUrl | base64 -d > /tmp/cover.png
+elif grep -e '^file' /tmp/coverUrl; then
+  cp $(sed 's/file:\/\///' < /tmp/coverUrl) /tmp/cover.png
+fi
+
+gowall extract --colors 1 --output /dev/null /tmp/cover.png
+

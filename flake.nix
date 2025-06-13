@@ -47,7 +47,7 @@
         '';
       });
       neofuturism-shell = let
-        dependencies = [ pkgs.cava quickshell.packages.${system}.default ];
+        dependencies = [ pkgs.cava pkgs.gowall quickshell.packages.${system}.default ];
       in pkgs.writeShellScriptBin "neoshell" ''
         if ! [ $QS_CONFIG_PATH ]; then
           export QS_CONFIG_PATH=${neofuturism-config}
@@ -62,6 +62,8 @@
     devShells = perSystem ({ pkgs, system }: {
       default = pkgs.mkShell {
         packages = [
+          pkgs.cava
+          pkgs.gowall
           self.packages.${system}.default
         ];
 

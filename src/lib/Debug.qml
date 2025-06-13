@@ -4,8 +4,8 @@ import Quickshell
 import Quickshell.Io
 
 Singleton {
-  function log(v: var, msg: string): void {
-    console.log(`${msg != "undefined" ? msg : ''}: ${v}`)
+  function log(v) {
+    console.log(v)
     return v
   }
   function loadDebugBecauseQuickshellHasSuperLazySingletonEvaluationAndTheIpcHandlerDoesntAppearOtherwise(val) { return val }

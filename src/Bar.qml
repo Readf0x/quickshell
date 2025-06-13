@@ -5,10 +5,12 @@ import "lib"
 import "bar"
 import "bar/media"
 import "widgets"
+import "tapeDeck"
 
 PanelWindow {
   id: root
   color: Debug.loadDebugBecauseQuickshellHasSuperLazySingletonEvaluationAndTheIpcHandlerDoesntAppearOtherwise("transparent")
+  property QsWindow selfRef: root
 
   anchors {
     top: true
@@ -44,6 +46,7 @@ PanelWindow {
   // Center Aligned
   MediaController {
     id: middle
+    popupRef: tapeDeck
   }
 
   Rectangle {
@@ -88,5 +91,9 @@ PanelWindow {
     Calendar {}
 
     Clock {}
+  }
+
+  TapeDeck {
+    id: tapeDeck
   }
 }

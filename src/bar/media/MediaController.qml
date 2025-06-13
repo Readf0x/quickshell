@@ -1,22 +1,17 @@
 import QtQuick
+import Quickshell
 import Quickshell.Services.Mpris
 import QtQuick.Effects
 import "../../lib"
 import "../../widgets"
 
 Row {
+  id: root
+  property PopupWindow popupRef
+
   height: 32; width: childrenRect.width
   anchors.horizontalCenter: parent.horizontalCenter
   spacing: 2
-
-  function updateColor() {
-    artProcessor.requestPaint()
-  }
-
-  function rgbaToHex(r, g, b) {
-    const num = (r << 16) + (g << 8) + b;
-    return `#${num.toString(16).padStart(6, "0")}`;
-  }
 
   function checkMedia(p) {
     if (p == null) {
@@ -26,12 +21,10 @@ Row {
   }
 
   Widget {
-    color: Colors.foreground
-
     Rectangle {
       width: disc1.width
       height: disc1.height
-      color: Colors.background
+      color: Colors.light_gray
       radius: 180
       anchors.centerIn: parent
     }
@@ -50,10 +43,11 @@ Row {
   }
 
   Widget {
-    width: 193
-    color: Colors.foreground
+    width: 195
+    color: Colors.background
 
     Row {
+      padding: 1
       spacing: 1
       height: 13
 
@@ -66,77 +60,12 @@ Row {
         }
       }
 
-      Canvas {
-        id: artProcessor
-        width: 4; height: 4
-
-        property string src: Media.player.trackArtUrl
-        onSrcChanged: {
-          if (isImageLoaded(src)) {
-            requestPaint()
-          } else {
-            loadImage(src)
-          }
-        }
-
-        function chunkIntoFours(arr) {
-          const result = []
-          for (let i = 0; i < arr.length; i += 4) {
-            result.push([arr[i],arr[i+1],arr[i+2],arr[i+3]])
-          }
-          return result
-        }
-
-        function highestSaturation(data) {
-          const chunked = chunkIntoFours(data)
-          let sat = chunked.map(arr => {
-            const norm = arr.map(i=>i/255)
-            let max = Math.max(norm[0], norm[1], norm[2])
-            let min = Math.min(norm[0], norm[1], norm[2])
-            let l = (max + min) / 2
-
-            let s
-            if (max === min) { s = 0 }
-            else {
-              let d = max - min
-              s = l > 0.5 ? d / (2 - max - min) : d / (max + min)
-            }
-
-            return s
-          })
-
-          let i = sat.indexOf(Math.max(...sat))
-          return chunked[i]
-        }
-
-        property color albumColor
-        onAlbumColorChanged: Media.albumColor = albumColor
-
-        onImageLoaded: {
-          requestPaint()
-        }
-
-        onPaint: {
-          if (!isImageLoaded(src)) return
-
-          var ctx = getContext("2d")
-
-          ctx.drawImage(src, 0,0,4,4)
-
-          let d = ctx.getImageData(0,0,4,4)
-          let p = highestSaturation(d.data)
-          albumColor = rgbaToHex(p[0],p[1],p[2])
-        }
-
-        visible: false
-      }
-
       Rectangle {
         width: cassette.width
         height: cassette.height
         color: Colors.background
 
-        property bool showCassette: isMedia(Media.player) && albumArt.albumColor != "#000000"
+        property bool showCassette: isMedia(Media.player) && Media.player.trackArtUrl != ""
         function isMedia(p) {
           if (p != null && p.trackArtUrl != null) { return true }
           else { return false }
@@ -144,7 +73,7 @@ Row {
 
         Rectangle {
           anchors.fill: albumArt
-          color: artProcessor.albumColor
+          color: Media.albumColor
           visible: parent.showCassette
         }
         Image {
@@ -181,11 +110,16 @@ Row {
         }
         MultiEffect {
           colorization: 1.0
-          colorizationColor: artProcessor.albumColor
+          colorizationColor: Media.albumColor
 
           anchors.fill: cassette
           source: cassette
           visible: parent.showCassette
+        }
+
+        MouseArea {
+          anchors.fill: parent
+          onClicked: popupRef.visible = !popupRef.visible
         }
       }
 
@@ -193,7 +127,7 @@ Row {
         id: mediaText
         y: 1
         text: mediaInfo(Media.player)
-        color: Colors.background
+        color: Colors.foreground
 
         function mediaInfo(p) {
           if (p) {
@@ -209,19 +143,19 @@ Row {
     }
 
     Row {
-      anchors.bottom: parent.bottom
+      x: 1; y: 15
       height: 10
       spacing: 2
 
-      MediaButton { type: "back";  }
       MediaButton { type: "play";  }
       MediaButton { type: "pause"; }
       MediaButton { type: "stop";  }
+      MediaButton { type: "back";  }
       MediaButton { type: "next";  }
 
       ProgressBar {
         segments: 26
-        progress: Media.player?.position / Media.player?.length
+        progress: Media.player.positionSupported ? Media.progress : 0
       }
     }
   }

@@ -11,7 +11,9 @@ Singleton {
   property int index: Mpris.players.values.length - 1
   property list<MprisPlayer> players: Mpris.players.values
   property MprisPlayer player: Mpris.players.values[index]
+  property string url: player.trackArtUrl
   property color albumColor
+  property real progress: player.position / player.length
 
   function nextPlayer(dir = true) {
     if (dir && index == players.length - 1) {
@@ -22,6 +24,13 @@ Singleton {
       player = players[index + (dir ? 1 : -1)]
     }
     index = Mpris.players.indexOf(player)
+  }
+
+  function limit(str) {
+    if (str.length >= 80) {
+      return str.slice(0, 80) + '...'
+    }
+    return str
   }
 
   IpcHandler {
@@ -36,17 +45,49 @@ Singleton {
     function next(): void { player.next() }
     function previous(): void { player.previous() }
     function nextPlayer(): void { root.nextPlayer() }
+    function reloadAlbumColor(): void { artProcessor.running = true }
   }
 
-  onPlayersChanged: {
-    player = players[players.length - 1]
+  onPlayersChanged: player = players[players.length - 1]
+  onUrlChanged: {
+    coverUrlFile.setText(url)
+    artProcessor.running = false
+    artProcessor.running = true
   }
 
   Timer {
     running: player?.playbackState == MprisPlaybackState.Playing
     interval: 1000
     repeat: true
-    onTriggered: player.positionChanged()
+    onTriggered: {
+      if (player.positionSupported) { player.positionChanged() }
+    }
+  }
+
+  Process {
+    id: artProcessor
+    command: [ `${System.configPath}/scripts/album-art` ]
+    stdout: SplitParser {
+      onRead: data => {
+        if (data.startsWith("#")) {
+          root.albumColor = `${data}`
+        }
+      }
+    }
+    stderr: SplitParser {
+      onRead: data => console.error(data)
+    }
+  }
+
+  Process {
+    running: true
+    command: [ "touch", "/tmp/coverUrl" ]
+  }
+
+  FileView {
+    id: coverUrlFile
+    path: Qt.resolvedUrl("/tmp/coverUrl")
+    blockWrites: true
   }
 }
 

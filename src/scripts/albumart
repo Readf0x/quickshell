@@ -1,8 +1,0 @@
-#!/usr/bin/env bash
-
-if [ "$1" == 'none' ]; then
-  echo 000000
-else
-  magick "$1" -resize 1x1\! -format "%[hex:u.p{0,0}]" info:
-fi
-
