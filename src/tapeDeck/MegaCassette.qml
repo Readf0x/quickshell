@@ -65,7 +65,7 @@ Image {
         }
       }
       Rectangle {
-        x: 66; y: 2
+        x: 65; y: 2
         width: 19; height: 19
         radius: height
         color: Colors.foreground
@@ -105,7 +105,7 @@ Image {
         Rectangle {
           width: parent.scale + 32; height: parent.scale + 32
           y: 8 - height / 2
-          x: parent.width + 16 - width / 2
+          x: parent.width + 15.5 - width / 2
           radius: 200
           color: Colors.background
           Behavior on width { Smooth {} }
