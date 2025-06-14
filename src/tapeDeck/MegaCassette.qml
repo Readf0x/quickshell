@@ -17,6 +17,41 @@ Image {
   Rectangle {
     x: 31; y: 14
     width: max.width; height: max.height
+    color: "transparent"
+    Rectangle {
+      color: Colors.shading
+      width: parent.width; height: 20
+      anchors.bottom: parent.bottom
+    }
+
+    Rectangle {
+      x: 38; y: 38
+      width: 7; height: 7
+      radius: 7
+      color: Colors.foreground
+    }
+    Rectangle {
+      x: 101; y: 38
+      width: 7; height: 7
+      radius: 7
+      color: Colors.foreground
+    }
+
+    Rectangle {
+      x: 57; y: 36
+      width: 32; height: 11
+      color: Colors.yellow
+    }
+  }
+
+  Rectangle {
+    x: 31; y: 14
+    width: max.width; height: max.height
+    visible: isMedia(Media.player) && Media.player.trackArtUrl != ""
+    function isMedia(p) {
+      if (p != null && p.trackArtUrl != null) { return true }
+      else { return false }
+    }
 
     Image {
       fillMode: Image.PreserveAspectCrop

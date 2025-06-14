@@ -19,7 +19,7 @@ Rectangle {
 
     property int watchState: mapx()
 
-    y: Media.player.playbackState == watchState ? 2 : 0
+    y: ((Mpris.players.values.length == 0 && type == "stop") || Media.player.playbackState == watchState) ? 2 : 0
 
     function mapx() {
       switch (type) {
