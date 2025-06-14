@@ -11,7 +11,7 @@ Image {
     if (p == null) {
       return true
     }
-    return Debug.log(p.playbackState) == MprisPlaybackState.Paused
+    return p.playbackState == MprisPlaybackState.Paused
   }
 
   Rectangle {
@@ -78,11 +78,19 @@ Image {
       anchors.horizontalCenter: parent.horizontalCenter
     }
 
+    component Smooth: NumberAnimation {
+      easing.type: Easing.Linear
+      duration: 1000
+    }
+
     Rectangle {
+      id: wheelHolderThing
       x: 30; y: 30
       width: 86; height: 23
       color: Media.albumColor
       radius: 23
+
+      property real rot: 0
 
       Rectangle {
         x: 2; y: 2
@@ -91,12 +99,7 @@ Image {
         color: Colors.foreground
         Image {
           source: "../img/mega-cassette-wheel.png"
-          RotationAnimation on rotation {
-            duration: 4000
-            loops: Animation.Infinite
-            from: 360; to: 0
-            paused: checkMedia(Media.player)
-          }
+          rotation: wheelHolderThing.rot
         }
       }
       Rectangle {
@@ -106,13 +109,39 @@ Image {
         color: Colors.foreground
         Image {
           source: "../img/mega-cassette-wheel.png"
-          RotationAnimation on rotation {
-            duration: 4000
-            loops: Animation.Infinite
-            from: 360; to: 0
-            paused: checkMedia(Media.player)
+          rotation: wheelHolderThing.rot
+        }
+      }
+      NumberAnimation {
+        id: infAnim
+        target: wheelHolderThing
+        property: "rot"
+        duration: 4000
+        loops: Animation.Infinite
+        from: 360; to: 0
+        paused: checkMedia(Media.player)
+        running: true
+        alwaysRunToEnd: false
+      }
+      NumberAnimation {
+        id: reverse
+        target: wheelHolderThing
+        property: "rot"
+        duration: 700
+        running: Media.wheelReverse
+        loops: 2
+        from: 0
+        to: 360
+        onRunningChanged: {
+          if (!running) {
+            infAnim.from = wheelHolderThing.rot
+            infAnim.to = wheelHolderThing.rot - 360
+          } else {
+            reverse.from = wheelHolderThing.rot - 360
+            reverse.to = wheelHolderThing.rot
           }
         }
+        onFinished: infAnim.running = true
       }
 
       Rectangle {
@@ -123,10 +152,6 @@ Image {
 
         // property int scale: 61
         property int scale: Media.progress * (width * 2 - 3)
-        component Smooth: NumberAnimation {
-          easing.type: Easing.Linear
-          duration: 1000
-        }
 
         Rectangle {
           width: 92 - parent.scale; height: 92 - parent.scale

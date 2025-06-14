@@ -13,7 +13,17 @@ Singleton {
   property MprisPlayer player: Mpris.players.values[index]
   property string url: player.trackArtUrl
   property color albumColor
-  property real progress: player.position / player.length
+  property double progress: player.position / player.length
+  property double oldProgress
+  property bool wheelReverse
+  onProgressChanged: {
+    if (progress < 0.001) {
+      wheelReverse = true
+    } else {
+      wheelReverse = false
+    }
+    oldProgress = progress
+  }
 
   function nextPlayer(dir = true) {
     if (dir && index == players.length - 1) {
