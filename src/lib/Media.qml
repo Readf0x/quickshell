@@ -8,10 +8,17 @@ import QtQuick
 Singleton {
   id: root
 
+  function format(str) {
+    if (str.includes("https://i.ytimg.com/vi/")) {
+      return str.replace(/\?[^\?]*$/, '')
+    }
+    return str
+  }
+
   property int index: Mpris.players.values.length - 1
   property list<MprisPlayer> players: Mpris.players.values
   property MprisPlayer player: Mpris.players.values[index]
-  property string url: player.trackArtUrl
+  property string url: format(player.trackArtUrl)
   property color albumColor
   property double progress: player.position / player.length
   property double oldProgress
@@ -60,7 +67,7 @@ Singleton {
 
   onPlayersChanged: player = players[players.length - 1]
   onUrlChanged: {
-    coverUrlFile.setText(url)
+    coverUrlFile.setText(player.trackArtUrl)
     artProcessor.running = false
     artProcessor.running = true
   }
@@ -83,9 +90,6 @@ Singleton {
           root.albumColor = `${data}`
         }
       }
-    }
-    stderr: SplitParser {
-      onRead: data => console.error(data)
     }
   }
 

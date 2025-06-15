@@ -65,7 +65,7 @@ Row {
         height: cassette.height
         color: Colors.background
 
-        property bool showCassette: isMedia(Media.player) && Media.player.trackArtUrl != ""
+        property bool showCassette: isMedia(Media.player) && Media.url != ""
         function isMedia(p) {
           if (p != null && p.trackArtUrl != null) { return true }
           else { return false }
@@ -83,7 +83,7 @@ Row {
           x: 1
           y: 1
           fillMode: Image.PreserveAspectCrop
-          source: Media.player.trackArtUrl
+          source: Media.url
           visible: parent.showCassette
         }
 

@@ -47,7 +47,7 @@ Image {
   Rectangle {
     x: 31; y: 14
     width: max.width; height: max.height
-    visible: isMedia(Media.player) && Media.player.trackArtUrl != ""
+    visible: isMedia(Media.player) && Media.url != ""
     function isMedia(p) {
       if (p != null && p.trackArtUrl != null) { return true }
       else { return false }
@@ -55,7 +55,7 @@ Image {
 
     Image {
       fillMode: Image.PreserveAspectCrop
-      source: Media.player.trackArtUrl
+      source: Media.url
       width: 138; height: 61
       x: 4; y: 5
     }
