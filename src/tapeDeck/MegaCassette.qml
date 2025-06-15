@@ -154,7 +154,7 @@ Image {
         property int scale: Media.progress * (width * 2 - 3)
 
         Rectangle {
-          width: 92 - parent.scale; height: 92 - parent.scale
+          width: parent.scale + 32; height: parent.scale + 32
           y: 8.5 - height / 2
           x: -15.5 - width / 2
           radius: 200
@@ -163,7 +163,7 @@ Image {
           Behavior on height { Smooth {} }
         }
         Rectangle {
-          width: parent.scale + 32; height: parent.scale + 32
+          width: 92 - parent.scale; height: 92 - parent.scale
           y: 8 - height / 2
           x: parent.width + 15.5 - width / 2
           radius: 200
