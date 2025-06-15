@@ -1,8 +1,10 @@
 import Quickshell
+import Quickshell.Io
 import QtQuick
 import "../widgets"
 
 PopupWindow {
+  id: popup
   anchor.window: root
   anchor.rect.x: parentWindow.width / 2 - width / 2
   anchor.rect.y: parentWindow.height + 2
@@ -38,6 +40,12 @@ PopupWindow {
         type: "next"
       }
     }
+  }
+
+  IpcHandler {
+    target: "popup"
+
+    function toggleVisible(): void { popup.visible = !popup.visible }
   }
 }
 
