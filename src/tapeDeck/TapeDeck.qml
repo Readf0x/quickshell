@@ -7,7 +7,10 @@ PopupWindow {
   id: popup
   anchor.window: root
   anchor.rect.x: parentWindow.width / 2 - width / 2
-  anchor.rect.y: parentWindow.height + 2
+  // align underneath
+  // anchor.rect.y: parentWindow.height + 2
+  // align on top
+  anchor.rect.y: 2
   implicitWidth: 216; implicitHeight: 160
   Widget {
     anchors.fill: parent
