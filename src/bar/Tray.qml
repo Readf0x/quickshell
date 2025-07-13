@@ -5,6 +5,7 @@ import QtQuick
 import "../widgets"
 
 WrapWidget {
+  visible: SystemTray.items.values.length > 0
   Row {
     Repeater {
       model: SystemTray.items
