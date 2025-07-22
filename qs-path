@@ -1,3 +1,3 @@
-export QS_CONFIG_PATH=$(pwd)
+export QS_CONFIG_PATH=$(pwd)/src
 
 echo 'run `eval $(cat qs-path | head -n 1)`'
