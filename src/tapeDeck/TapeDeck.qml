@@ -10,7 +10,7 @@ PopupWindow {
   // align underneath
   // anchor.rect.y: parentWindow.height + 2
   // align on top
-  anchor.rect.y: 0
+  anchor.rect.y: parentWindow.height + 2
   implicitWidth: 216; implicitHeight: 160
   Widget {
     anchors.fill: parent
