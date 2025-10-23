@@ -2,7 +2,7 @@
   description = "readf0x's quickshell config";
 
   inputs = {
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-25.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-unstable";
     quickshell = {
       url = "git+https://git.outfoxxed.me/outfoxxed/quickshell";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -13,10 +13,10 @@
     lib = nixpkgs.lib;
     perSystem = package: (lib.listToAttrs (lib.map (a: { name = a; value = package { pkgs = nixpkgs.legacyPackages.${a}; system = a; }; }) (lib.attrNames nixpkgs.legacyPackages)));
     makeQmlPath = pkgs: lib.makeSearchPath "lib/qt-6/qml" (map (path: "${path}") pkgs);
-    qmlPath = pkgs: makeQmlPath [
+    qmlPath = pkgs: makeQmlPath (with pkgs.kdePackages; [
       quickshell.packages.${pkgs.system}.default
-      pkgs.kdePackages.full
-    ];
+      qtdeclarative
+    ]);
   in {
     packages = perSystem ({ pkgs, system }: rec {
       courier = pkgs.stdenv.mkDerivation (finalAttrs: {
