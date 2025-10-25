@@ -6,6 +6,7 @@ import "bar"
 import "bar/media"
 import "widgets"
 import "tapeDeck"
+import "notifs"
 
 PanelWindow {
   id: root
@@ -96,4 +97,6 @@ PanelWindow {
   TapeDeck {
     id: tapeDeck
   }
+
+	NArea {}
 }
