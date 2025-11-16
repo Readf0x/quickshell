@@ -19,23 +19,9 @@
     ]);
   in {
     packages = perSystem ({ pkgs, system }: rec {
-      courier = pkgs.stdenv.mkDerivation (finalAttrs: {
-        pname = "Courier";
-        version = "1.0";
-
-        src = ./fonts;
-
-        dontBuild = true;
-
-        installPhase = ''
-          runHook preInstall
-          install -Dm644 --target $out/share/fonts/truetype ./*.ttf
-          runHook postInstall
-        '';
-      });
-      neofuturism-config = pkgs.stdenv.mkDerivation (finalAttrs: {
-        pname = "neofuturism-config";
-        version = "v1.1";
+      bubble-config = pkgs.stdenv.mkDerivation (finalAttrs: {
+        pname = "bubble-config";
+        version = "v0.1";
 
         src = ./.;
 
@@ -46,18 +32,18 @@
           cp -r src/* $out
         '';
       });
-      neofuturism-shell = let
+      # export FONTCONFIG_FILE=${pkgs.makeFontsConf { fontDirectories = [  ]; }}
+      bubble-shell = let
         dependencies = [ pkgs.cava pkgs.gowall quickshell.packages.${system}.default ];
-      in pkgs.writeShellScriptBin "neoshell" ''
+      in pkgs.writeShellScriptBin "bubbleshell" ''
         if ! [ $QS_CONFIG_PATH ]; then
-          export QS_CONFIG_PATH=${neofuturism-config}
+          export QS_CONFIG_PATH=${bubble-config}
         fi
-        export FONTCONFIG_FILE=${pkgs.makeFontsConf { fontDirectories = [ courier ]; }}
         export PATH="${lib.makeBinPath dependencies}:$PATH"
         export QML2_IMPORT_PATH="${qmlPath pkgs}"
         ${quickshell.packages.${system}.default}/bin/quickshell $@
       '';
-      default = neofuturism-shell;
+      default = bubble-shell;
     });
     devShells = perSystem ({ pkgs, system }: {
       default = pkgs.mkShell {
