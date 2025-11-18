@@ -55,8 +55,10 @@ PanelWindow {
 		}
 	}
 
+	mask: Region { item: panelBg }
+
 	implicitHeight: 34
-	exclusiveZone: 16
+	exclusiveZone: compact ? 16 : implicitHeight
 
 	Row {
 		anchors {
