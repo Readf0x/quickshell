@@ -3,10 +3,13 @@ import Quickshell.Io
 import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Layouts
+import QtQuick.Effects
 import "../lib"
 
 PanelWindow {
 	id: bar
+
+	property string backgroundImage
 
   anchors {
     left: true
@@ -29,12 +32,36 @@ PanelWindow {
 
 	color: "transparent"
 
+	Image {
+		id: panelBg
+		source: "../img/background.png"
+		height: 16
+		opacity: bar.compact ? 1 : 0
+		layer {
+			enabled: true
+			effect: MultiEffect {
+				autoPaddingEnabled: false
+				blurEnabled: true
+				blur: 1.0
+				blurMultiplier: 50
+			}
+		}
+
+		Behavior on opacity {
+			NumberAnimation {
+				duration: 150
+				easing.type: Easing.InOutQuad
+			}
+		}
+	}
+
 	implicitHeight: 34
 	exclusiveZone: 16
 
 	Row {
 		anchors {
 			left: parent.left
+			leftMargin: 4
 			top: parent.top
 		}
 		Workspaces {}

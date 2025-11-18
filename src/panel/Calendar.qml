@@ -83,7 +83,6 @@ Row {
 		NumberAnimation {
 			properties: "anchors.topMargin,font.pixelSize"
 			duration: 120
-			easing.type: Easing.InCirc
 		}
 	}
 }

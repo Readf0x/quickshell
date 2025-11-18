@@ -131,7 +131,6 @@ Item {
 		NumberAnimation {
 			properties: "strokeWidth,length,x,y,width,height,startX,startY,opacity"
 			duration: 120
-			easing.type: Easing.InCirc
 		}
 	}
 }

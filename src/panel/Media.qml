@@ -2,6 +2,9 @@ import QtQuick
 import QtQuick.Layouts
 import "../lib"
 
+// [TODO] clean up this absolute mess
+// this has like 4 instances of recursive rearranging right now...
+
 ColumnLayout {
 	id: root
 	anchors {
@@ -119,7 +122,6 @@ ColumnLayout {
 		NumberAnimation {
 			properties: "Layout.topMargin,Layout.bottomMargin,Layout.leftMargin,Layout.rightMargin,height,Layout.preferredHeight,font.pixelSize"
 			duration: 120
-			easing.type: Easing.InCirc
 		}
 		ColorAnimation { properties: "color"; duration: 120 }
 	}

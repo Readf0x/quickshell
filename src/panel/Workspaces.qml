@@ -12,7 +12,6 @@ RowLayout {
 	Behavior on implicitHeight {
 		NumberAnimation {
 			duration: 120
-			easing.type: Easing.InCirc
 		}
 	}
 

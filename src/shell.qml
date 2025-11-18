@@ -3,9 +3,15 @@ import QtQuick
 import "panel"
 
 Panel {
-	Background {
-		backgroundImage: "img/background.png"
-		foregroundImage: "img/foreground.png"
+	backgroundImage: "img/background.png"
+	Variants {
+		model: Quickshell.screens
+		delegate: Background {
+			required property var modelData
+			screen: modelData
+			backgroundImage: "img/background.png"
+			foregroundImage: "img/foreground.png"
+		}
 	}
 }
 
