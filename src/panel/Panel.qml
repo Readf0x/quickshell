@@ -2,7 +2,6 @@ import Quickshell
 import Quickshell.Io
 import Quickshell.Hyprland
 import QtQuick
-import QtQuick.Layouts
 import QtQuick.Effects
 import "../lib"
 
@@ -22,37 +21,51 @@ PanelWindow {
 		return !toplevels.every(t=>t.lastIpcObject.floating)
 	}
 
-	IpcHandler {
-		target: "bar"
-
-		function refresh(): void {
+	GlobalShortcut {
+		name: "refreshToplevels"
+		onPressed: {
 			Hyprland.refreshToplevels()
 		}
 	}
 
 	color: "transparent"
 
-	Image {
+	// Image {
+	// 	id: panelBg
+	// 	source: "../img/background.png"
+	// 	height: 16
+	// 	width: parent.width
+	// 	opacity: bar.compact ? 1 : 0
+	// 	layer {
+	// 		enabled: true
+	// 		effect: MultiEffect {
+	// 			autoPaddingEnabled: false
+	// 			blurEnabled: true
+	// 			blur: 1.0
+	// 			blurMultiplier: 50
+	// 		}
+	// 	}
+	//
+	// 	Behavior on opacity {
+	// 		NumberAnimation {
+	// 			duration: 150
+	// 			easing.type: Easing.InOutQuad
+	// 		}
+	// 	}
+	// }
+	Rectangle {
 		id: panelBg
-		source: "../img/background.png"
+		// color: Colors.black
+		color: "transparent"
 		height: 16
-		opacity: bar.compact ? 1 : 0
-		layer {
-			enabled: true
-			effect: MultiEffect {
-				autoPaddingEnabled: false
-				blurEnabled: true
-				blur: 1.0
-				blurMultiplier: 50
-			}
-		}
-
-		Behavior on opacity {
-			NumberAnimation {
-				duration: 150
-				easing.type: Easing.InOutQuad
-			}
-		}
+		width: parent.width
+		// opacity: bar.compact ? 1 : 0
+		// Behavior on opacity {
+		// 	NumberAnimation {
+		// 		duration: 150
+		// 		easing.type: Easing.InOutQuad
+		// 	}
+		// }
 	}
 
 	mask: Region { item: panelBg }

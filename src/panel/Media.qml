@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import "../lib"
+import "../subclass"
 
 // [TODO] clean up this absolute mess
 // this has like 4 instances of recursive rearranging right now...
@@ -40,26 +41,19 @@ ColumnLayout {
 			Layout.bottomMargin: -2
 			Layout.preferredWidth: 141
 			spacing: -4
-			Text {
+			FText {
 				id: title
 				Layout.fillWidth: true
 				text: Mpris.player.trackTitle
-				clip: true
-				font {
-					pixelSize: 14
-					family: "Sniglet"
-				}
+				font.pixelSize: 14
 			}
 			RowLayout {
-				Text {
+				FText {
 					id: artist
 					text: Mpris.player.trackArtist
 					color: Colors.gray
 					z: 6
-					font {
-						pixelSize: 10
-						family: "Sniglet"
-					}
+					font.pixelSize: 10
 				}
 			}
 		}

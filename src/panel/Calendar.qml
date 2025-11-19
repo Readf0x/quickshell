@@ -1,6 +1,7 @@
 import QtQuick
 import QtQuick.Layouts
 import "../lib"
+import "../subclass"
 
 Row {
 	spacing: 4
@@ -48,16 +49,13 @@ Row {
 			}
 		}
 	}
-	Text {
+	FText {
 		id: date
 		text: {
 			let date = Time.date.getDate()
 			return `${date < 10 ? '0' : ''}${date}`
 		}
-		font {
-			pixelSize: 30
-			family: "Sniglet"
-		}
+		font.pixelSize: 30
 		anchors {
 			top: parent.top
 			topMargin: -6

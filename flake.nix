@@ -17,19 +17,36 @@
       quickshell.packages.${pkgs.stdenv.hostPlatform.system}.default
       qtdeclarative
     ]);
+    fontconfig = pkgs: fonts: pkgs.makeFontsConf { fontDirectories = fonts; };
   in {
     packages = perSystem ({ pkgs, system }: rec {
-      fonts = pkgs.stdenv.mkDerivation (finalAttrs: {
+      fonts = pkgs.stdenv.mkDerivation (finalAttrs: rec {
         pname = "bubble-fonts";
         version = "1.0";
 
-        src = ./fonts;
+        srcs = [
+          (pkgs.fetchurl {
+            url = "https://github.com/google/fonts/raw/f6e3429503c309ac3a8b77b6178a765b2463f702/ofl/varelaround/VarelaRound-Regular.ttf";
+            hash = "sha256-4eR+tm28LdwQZmEzjnEtkXbJ6DxmmoL94VUySCPQOqI=";
+          })
+          (pkgs.fetchurl {
+            url = "https://github.com/google/fonts/raw/f6e3429503c309ac3a8b77b6178a765b2463f702/ofl/cherrybombone/CherryBombOne-Regular.ttf";
+            hash = "sha256-lZbGeT6wM1BX1lWxN1HOfMtQ7wzRXLUsWEZfti3iu48=";
+          })
+        ];
+
+        sourceRoot = ".";
+        unpackPhase = ''
+          cp ${builtins.elemAt srcs 1} ./CherryBombOne-Regular.ttf
+          cp ${builtins.elemAt srcs 0} ./VarelaRound-Regular.ttf
+        '';
 
         dontBuild = true;
 
         installPhase = ''
           runHook preInstall
-          install -Dm644 --target $out/share/fonts/truetype ./*.ttf
+          install -Dm644 CherryBombOne-Regular.ttf "$out/share/fonts/truetype/CherryBombOne-Regular.ttf"
+          install -Dm644 VarelaRound-Regular.ttf "$out/share/fonts/truetype/VarelaRound-Regular.ttf"
           runHook postInstall
         '';
       });
@@ -51,7 +68,7 @@
         if ! [ $QS_CONFIG_PATH ]; then
           export QS_CONFIG_PATH=${bubble-config}
         fi
-        export FONTCONFIG_FILE=${pkgs.makeFontsConf { fontDirectories = [ fonts ]; }}
+        export FONTCONFIG_FILE=${fontconfig pkgs [ fonts ]}
         export PATH="${lib.makeBinPath dependencies}:$PATH"
         export QML2_IMPORT_PATH="${qmlPath pkgs}"
         ${quickshell.packages.${system}.default}/bin/quickshell $@
@@ -64,10 +81,10 @@
           pkgs.cava
           pkgs.gowall
           self.packages.${system}.default
-          quickshell.packages.${pkgs.system}.default
+          quickshell.packages.${system}.default
         ];
 
-        FONTCONFIG_FILE = pkgs.makeFontsConf { fontDirectories = [ self.packages.${system}.fonts ]; };
+        FONTCONFIG_FILE = fontconfig pkgs [ self.packages.${system}.fonts pkgs.google-fonts ];
         QML2_IMPORT_PATH = qmlPath pkgs;
 
         shellHook = ''

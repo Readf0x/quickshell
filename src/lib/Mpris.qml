@@ -1,7 +1,7 @@
 pragma Singleton
 
 import Quickshell
-import Quickshell.Io
+import Quickshell.Hyprland
 import Quickshell.Services.Mpris
 import QtQuick
 
@@ -31,20 +31,48 @@ Singleton {
     return str
   }
 
-  IpcHandler {
-    target: "player"
-
-    function playPause(): void {
-      player.isPlaying ? player.pause() : player.play()
-    }
-    function play(): void { player.play() }
-    function pause(): void { player.pause() }
-    function stop(): void { player.stop() }
-    function next(): void { player.next() }
-    function previous(): void { player.previous() }
-    function nextPlayer(): void { root.nextPlayer() }
-    function reloadAlbumColor(): void { artProcessor.running = true }
-  }
+	GlobalShortcut {
+		name: "playPause"
+		onPressed: {
+			player.isPlaying ? player.pause() : player.play()
+		}
+	}
+	GlobalShortcut {
+		name: "play"
+		onPressed: {
+			player.play()
+		}
+	}
+	GlobalShortcut {
+		name: "pause"
+		onPressed: {
+			player.pause()
+		}
+	}
+	GlobalShortcut {
+		name: "stop"
+		onPressed: {
+			player.stop()
+		}
+	}
+	GlobalShortcut {
+		name: "next"
+		onPressed: {
+			player.next()
+		}
+	}
+	GlobalShortcut {
+		name: "previous"
+		onPressed: {
+			player.previous()
+		}
+	}
+	GlobalShortcut {
+		name: "nextPlayer"
+		onPressed: {
+			root.nextPlayer()
+		}
+	}
 
   onPlayersChanged: player = players[players.length - 1]
 
