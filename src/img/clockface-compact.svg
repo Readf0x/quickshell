@@ -1,14 +1,14 @@
 <svg width="30" height="16" viewBox="0 0 30 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M15 14.3636V15" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M27.7273 8H29" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M15 1.63636V1" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M2.27273 8H1" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M21.3636 13.5111L22 14.0622" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M26.0221 4.81818L27.1243 4.5" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M8.63636 2.48893L8 1.93782" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M3.97782 11.1818L2.87561 11.5" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M26.0221 11.1818L27.1243 11.5" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M21.3634 2.48894L21.9998 1.93783" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M3.97782 4.81819L2.87561 4.50001" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
-<path d="M8.63624 13.5111L7.99988 14.0622" stroke="black" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M15 14.3636V15" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M27.7273 8H29" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M15 1.63636V1" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M2.27273 8H1" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M21.3636 13.5111L22 14.0622" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M26.0221 4.81818L27.1243 4.5" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M8.63636 2.48893L8 1.93782" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M3.97782 11.1818L2.87561 11.5" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M26.0221 11.1818L27.1243 11.5" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M21.3634 2.48894L21.9998 1.93783" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M3.97782 4.81819L2.87561 4.50001" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
+<path d="M8.63624 13.5111L7.99988 14.0622" stroke="#d3c6aa" stroke-opacity="0.5" stroke-width="2" stroke-linecap="round"/>
 </svg>

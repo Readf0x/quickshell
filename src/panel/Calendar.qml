@@ -32,7 +32,7 @@ Row {
 				width: today ? 4 : 2
 				height: width
 				radius: 2
-				color: today ? Colors.green : Colors.gray
+				color: today ? Colors.green : (compact ? Colors.light : Colors.gray)
 				opacity: {
 					if (bar.compact) {
 						return currentWeek ? 1.0 : 0.0
@@ -60,6 +60,7 @@ Row {
 			top: parent.top
 			topMargin: -6
 		}
+		color: Colors.background
 	}
 
 	state: bar.compact ? "compact" : ""
@@ -70,6 +71,7 @@ Row {
 			target: date
 			anchors.topMargin: -7
 			font.pixelSize: 18
+			color: Colors.foreground
 		}
 		PropertyChanges {
 			target: grid
@@ -82,6 +84,7 @@ Row {
 			properties: "anchors.topMargin,font.pixelSize"
 			duration: 120
 		}
+		ColorAnimation { properties: "color"; duration: 120 }
 	}
 }
 

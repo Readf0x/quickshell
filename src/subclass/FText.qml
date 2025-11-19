@@ -7,6 +7,6 @@ Text {
 		family: "Varela Round"
 	}
 	clip: true
-	color: Colors.black
+	color: Colors.foreground
 }
 

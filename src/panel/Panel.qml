@@ -1,8 +1,6 @@
 import Quickshell
-import Quickshell.Io
 import Quickshell.Hyprland
 import QtQuick
-import QtQuick.Effects
 import "../lib"
 
 PanelWindow {
@@ -16,9 +14,15 @@ PanelWindow {
     right: true
   }
 
-	readonly property bool compact: {
+	readonly property int compact: {
 		let toplevels = Hyprland.monitorFor(screen).activeWorkspace.toplevels.values
-		return !toplevels.every(t=>t.lastIpcObject.floating)
+		if (toplevels.every(t=>t.lastIpcObject.floating)) {
+			return 0
+		}
+		if (toplevels.length == 1 || toplevels.some(t=>t.lastIpcObject.fullscreen == 1)) {
+			return 2
+		}
+		return 1
 	}
 
 	GlobalShortcut {
@@ -30,77 +34,74 @@ PanelWindow {
 
 	color: "transparent"
 
-	// Image {
-	// 	id: panelBg
-	// 	source: "../img/background.png"
-	// 	height: 16
-	// 	width: parent.width
-	// 	opacity: bar.compact ? 1 : 0
-	// 	layer {
-	// 		enabled: true
-	// 		effect: MultiEffect {
-	// 			autoPaddingEnabled: false
-	// 			blurEnabled: true
-	// 			blur: 1.0
-	// 			blurMultiplier: 50
-	// 		}
-	// 	}
-	//
-	// 	Behavior on opacity {
-	// 		NumberAnimation {
-	// 			duration: 150
-	// 			easing.type: Easing.InOutQuad
-	// 		}
-	// 	}
-	// }
-	Rectangle {
-		id: panelBg
-		// color: Colors.black
-		color: "transparent"
-		height: 16
-		width: parent.width
-		// opacity: bar.compact ? 1 : 0
-		// Behavior on opacity {
-		// 	NumberAnimation {
-		// 		duration: 150
-		// 		easing.type: Easing.InOutQuad
-		// 	}
-		// }
-	}
-
 	mask: Region { item: panelBg }
 
-	implicitHeight: 34
-	exclusiveZone: compact ? 16 : implicitHeight
-
-	Row {
-		anchors {
-			left: parent.left
-			leftMargin: 4
-			top: parent.top
-		}
-		Workspaces {}
+	implicitHeight: 38
+	exclusiveZone: {
+		return [
+			implicitHeight,
+			22,
+			16,
+		][compact]
 	}
 
-	Media {}
-
-	Row {
-		anchors {
-			right: parent.right
-			top: parent.top
+	Item {
+		height: bar.implicitHeight - 4
+		width: compact == 1 ? parent.width - 8 : parent.width
+		clip: false
+		Behavior on width {
+			NumberAnimation { duration: 120 }
 		}
-		spacing: 8
-		rightPadding: 4
-		Calendar {
-			anchors {
-				top: parent.top
-				topMargin: 4
+		anchors {
+			top: parent.top
+			horizontalCenter: parent.horizontalCenter
+			topMargin: compact == 1 ? 4 : 0
+			Behavior on topMargin {
+				NumberAnimation { duration: 120 }
 			}
 		}
-		Clock {
+		Rectangle {
+			id: panelBg
+			height: compact ? 16 : bar.implicitHeight - 4
+			width: parent.width
+			color: compact ? Colors.background : "transparent"
+			Behavior on color {
+				ColorAnimation { properties: "color"; duration: 120 }
+			}
+			radius: compact == 1 ? 4 : 0
+		}
+		Row {
 			anchors {
+				left: parent.left
+				leftMargin: 4
 				top: parent.top
-				topMargin: 4
+			}
+			Workspaces {}
+		}
+
+		Media {}
+
+		Row {
+			anchors {
+				right: parent.right
+				top: parent.top
+			}
+			spacing: 8
+			rightPadding: 4
+			Calendar {
+				anchors {
+					top: parent.top
+					topMargin: compact ? 4 : 8
+				}
+				Behavior on anchors.topMargin {
+					NumberAnimation { duration: 120 }
+				}
+			}
+			Clock {
+				anchors {
+					top: parent.top
+					topMargin: 4
+				}
 			}
 		}
 	}

@@ -44,13 +44,14 @@ ColumnLayout {
 			FText {
 				id: title
 				Layout.fillWidth: true
-				text: Mpris.player.trackTitle
+				text: Mpris.formatted.title
 				font.pixelSize: 14
+				color: Colors.background
 			}
 			RowLayout {
 				FText {
 					id: artist
-					text: Mpris.player.trackArtist
+					text: Mpris.formatted.subtitle
 					color: Colors.gray
 					z: 6
 					font.pixelSize: 10
@@ -84,6 +85,7 @@ ColumnLayout {
 		PropertyChanges {
 			target: title
 			font.pixelSize: 12
+			color: Colors.foreground
 		}
 		PropertyChanges {
 			target: artist
@@ -104,6 +106,7 @@ ColumnLayout {
 		}
 		PropertyChanges {
 			target: progressBar
+			color: Colors.light
 			z: -1
 		}
 		PropertyChanges {

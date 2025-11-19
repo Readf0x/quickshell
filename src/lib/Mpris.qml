@@ -13,6 +13,25 @@ Singleton {
   property MprisPlayer player: Mpris.players.values[index]
   property double progress: player.position / player.length
 
+	property var formatted: {
+		let matches = player.trackTitle.match(/(.*) [-—] (.*)/)
+		if (
+			matches &&
+			matches.length &&
+			!player.trackAlbumArtist &&
+			!player.trackArtist
+		) {
+			return {
+				title: matches[1],
+				subtitle: matches[2]
+			}
+		}
+		return {
+			title: player.trackTitle,
+			subtitle: player.trackArtist || player.trackAlbumArtist || "Unknown Artist"
+		}
+	}
+
   function nextPlayer(dir = true) {
     if (dir && index == players.length - 1) {
       player = players[0]

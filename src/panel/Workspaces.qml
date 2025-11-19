@@ -34,10 +34,10 @@ RowLayout {
 						return { color: Colors.green, height: repeater.focusedHeight }
 					}
 					if (workspace.active) {
-						return { color: Colors.black, height: repeater.activeHeight }
+						return { color: bar.compact ? Colors.foreground : Colors.background, height: repeater.activeHeight }
 					}
 				}
-				return { color: Colors.gray, height: 4 }
+				return { color: bar.compact ? Colors.light : Colors.gray, height: 4 }
 			}
 
 			Behavior on implicitHeight {

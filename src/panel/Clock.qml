@@ -56,7 +56,7 @@ Item {
 		}
 		ShapePath {
 			id: minute
-			strokeColor: Colors.black
+			strokeColor: Colors.background
 			strokeWidth: 3
 			capStyle: ShapePath.RoundCap
 
@@ -72,7 +72,7 @@ Item {
 		}
 		ShapePath {
 			id: hour
-			strokeColor: Colors.black
+			strokeColor: Colors.background
 			strokeWidth: 3
 			capStyle: ShapePath.RoundCap
 
@@ -97,12 +97,14 @@ Item {
 			strokeWidth: 2
 			length: 3
 			startX: 15; startY: 8
+			strokeColor: Colors.foreground
 		}
 		PropertyChanges {
 			target: minute
 			strokeWidth: 2
 			length: 6
 			startX: 15; startY: 8
+			strokeColor: Colors.foreground
 		}
 		PropertyChanges {
 			target: second
@@ -132,6 +134,7 @@ Item {
 			properties: "strokeWidth,length,x,y,width,height,startX,startY,opacity"
 			duration: 120
 		}
+		ColorAnimation { properties: "strokeColor"; duration: 120 }
 	}
 }
 
