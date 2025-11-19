@@ -15,11 +15,12 @@ PanelWindow {
   }
 
 	readonly property int compact: {
+		Hyprland.refreshToplevels()
 		let toplevels = Hyprland.monitorFor(screen).activeWorkspace.toplevels.values
 		if (toplevels.every(t=>t.lastIpcObject.floating)) {
 			return 0
 		}
-		if (toplevels.length == 1 || toplevels.some(t=>t.lastIpcObject.fullscreen == 1)) {
+		if ((toplevels.filter(t=>!t.lastIpcObject.floating) || []).length == 1 || toplevels.some(t=>t.lastIpcObject.fullscreen == 1)) {
 			return 2
 		}
 		return 1
