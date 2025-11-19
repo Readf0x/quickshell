@@ -40,7 +40,7 @@ PanelWindow {
 	exclusiveZone: {
 		return [
 			implicitHeight,
-			22,
+			20,
 			16,
 		][compact]
 	}
