@@ -79,9 +79,9 @@
       default = pkgs.mkShell {
         packages = [
           pkgs.cava
-          pkgs.gowall
           self.packages.${system}.default
           quickshell.packages.${system}.default
+          pkgs.kdePackages.qtimageformats
         ];
 
         FONTCONFIG_FILE = fontconfig pkgs [ self.packages.${system}.fonts pkgs.google-fonts ];

@@ -50,9 +50,6 @@ PanelWindow {
 		height: bar.implicitHeight - 4
 		width: compact == 1 ? parent.width - 8 : parent.width
 		clip: false
-		Behavior on width {
-			NumberAnimation { duration: 120 }
-		}
 		anchors {
 			top: parent.top
 			horizontalCenter: parent.horizontalCenter

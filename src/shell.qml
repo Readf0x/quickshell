@@ -2,8 +2,10 @@ import Quickshell
 import QtQuick
 import "panel"
 
-Panel {
-	backgroundImage: "img/background.png"
+ShellRoot {
+	Panel {
+		backgroundImage: "img/background.png"
+	}
 	Variants {
 		model: Quickshell.screens
 		delegate: Background {

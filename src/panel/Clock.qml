@@ -81,7 +81,7 @@ Item {
 			property int length: 7
 
 			PathLine {
-				property list<int> point: hands.percentToPoint(Time.hours / 12, hour.length)
+				property list<int> point: hands.percentToPoint((Time.hours + Time.minutes/60) / 12, hour.length)
 				x: point[0] + hour.startX
 				y: point[1] + hour.startY
 			}

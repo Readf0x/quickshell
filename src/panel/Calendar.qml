@@ -29,9 +29,10 @@ Row {
 				Layout.margins: today ? 0 : 1
 				Layout.row: Math.floor((index + repeater.firstDay) / 7)
 				Layout.column: (index + repeater.firstDay) % 7
-				width: today ? 4 : 2
-				height: width
+				width: 2; height: 2
 				radius: 2
+				scale: today ? 2 : 1
+				transformOrigin: Item.Left
 				color: today ? Colors.green : (compact ? Colors.light : Colors.gray)
 				opacity: {
 					if (bar.compact) {

@@ -1,5 +1,4 @@
 import Quickshell
-import Quickshell.Wayland
 import QtQuick
 import QtQuick.Effects
 import "lib"
@@ -99,7 +98,7 @@ PanelWindow {
 	MouseArea {
 		anchors.fill: parent
 		hoverEnabled: true
-		property int textScale: 400
+		property int textScale: fgScale * 2
 		property int fgScale: 200
 
 		function paralax(item, scale) {

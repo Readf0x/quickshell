@@ -26,18 +26,23 @@ RowLayout {
 			implicitHeight: data.height
 			width: 4
 			radius: 2
+			border {
+				color: data.border
+				width: color != "transparent" ? 1 : 0
+			}
 
 			property var data: {
 				const workspace = Hyprland.workspaces.values.find(w => w.id == modelData + 1)
 				if (workspace) {
 					if (Hyprland.focusedWorkspace?.id == modelData + 1) {
-						return { color: Colors.green, height: repeater.focusedHeight }
+						return { color: Colors.green, height: repeater.focusedHeight, border: "transparent" }
 					}
 					if (workspace.active) {
-						return { color: bar.compact ? Colors.foreground : Colors.background, height: repeater.activeHeight }
+						return { color: bar.compact ? Colors.foreground : Colors.background, height: repeater.activeHeight, border: "transparent" }
 					}
+					return { color: bar.compact ? Colors.light : Colors.gray, height: 4, border: "transparent" }
 				}
-				return { color: bar.compact ? Colors.light : Colors.gray, height: 4 }
+				return { color: "transparent", height: 4, border: bar.compact ? Colors.tlight : Colors.tgray }
 			}
 
 			Behavior on implicitHeight {
