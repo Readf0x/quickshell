@@ -15,16 +15,24 @@ PanelWindow {
   }
 
 	readonly property int compact: {
-		Hyprland.refreshToplevels()
-		let toplevels = Hyprland.monitorFor(screen).activeWorkspace.toplevels.values
-		if (toplevels.every(t=>t.lastIpcObject.floating)) {
-			return 0
-		}
-		if ((toplevels.filter(t=>!t.lastIpcObject.floating) || []).length == 1 || toplevels.some(t=>t.lastIpcObject.fullscreen == 1)) {
-			return 2
-		}
-		return 1
+    let workspace = Hyprland.monitorFor(screen).activeWorkspace
+    let toplevels = workspace.toplevels.values
+    return compactValue(toplevels, workspace, false)
 	}
+  function compactValue(toplevels, workspace, reloaded): int {
+    if (reloaded) {
+      if (toplevels.every(t=>t.lastIpcObject.floating)) {
+        return 0
+      }
+      if ((toplevels.filter(t=>!t.lastIpcObject.floating && (t.lastIpcObject.class || t.lastIpcObject.title)) || []).length == 1 || workspace.hasFullscreen) {
+        return 2
+      }
+      return 1
+    } else {
+      Hyprland.refreshToplevels()
+      return compactValue(toplevels, workspace, true)
+    }
+  }
 
 	GlobalShortcut {
 		name: "refreshToplevels"

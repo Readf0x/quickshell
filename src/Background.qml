@@ -38,20 +38,23 @@ PanelWindow {
 		}
 
 		Row {
-			width: parent.width
-			height: 500
+      id: bars
+      readonly property int count: Math.floor((parent.width - 50) / 45)
+			width: bars.count*45
+			height: parent.height * 0.5
 
-			y: 308
+			y: parent.height * 0.25
 
-			spacing: 17
-			leftPadding: 23
+			spacing: 15
+			leftPadding: (parent.width - width) / 2
 
 			Repeater {
-				model: Cava.bars
+				model: Cava.scale(bars.count)
+				// model: Cava.bars
 
 				Rectangle {
-					width: 28
-					height: modelData + 2
+					width: 30
+					height: (bars.height * (modelData/512)) + 2
 					color: Colors.green
 
 					anchors.bottom: parent.bottom
