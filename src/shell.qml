@@ -2,7 +2,7 @@ import Quickshell
 import QtQuick
 import "panel"
 import "volume"
-// import "notifs"
+import "notifs"
 
 ShellRoot {
 	Panel {
@@ -17,7 +17,7 @@ ShellRoot {
 			foregroundImage: "img/foreground.png"
 		}
 	}
-	// Notifs {}
+	Notifs {}
   Volume {}
 }
 

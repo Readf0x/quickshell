@@ -20,6 +20,10 @@ PanelWindow {
 	implicitWidth: 248
 	exclusiveZone: 0
 
+  mask: Region {
+    item: list
+  }
+
 	property list<Notification> notifications
 
 	onNotificationsChanged: {
@@ -44,6 +48,7 @@ PanelWindow {
 	}
 
 	Column {
+    id: list
 		spacing: 4
 
 		anchors {
@@ -95,7 +100,7 @@ PanelWindow {
 								anchors.fill: parent
 								property color propogatedColor: "transparent"
 								acceptedButtons: Qt.LeftButton
-								onPressed: {
+								onClicked: {
 									let thisNotif = modelData
 									root.notifications = root.notifications.filter(n=>n.id!=thisNotif.id)
 									thisNotif.dismiss()
@@ -112,9 +117,10 @@ PanelWindow {
 						width: parent.width
 						Image {
 							source: modelData.image
-							visible: source
-							Layout.preferredWidth: 30
+							visible: source != ""
 							Layout.preferredHeight: 30
+              Layout.preferredWidth: Math.min(60,
+                (sourceSize.width / sourceSize.height) * Layout.preferredHeight)
 						}
 						FText {
 							textFormat: Text.StyledText

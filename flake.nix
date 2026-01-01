@@ -68,6 +68,9 @@
         if ! [ $QS_CONFIG_PATH ]; then
           export QS_CONFIG_PATH=${bubble-config}
         fi
+        if ! [ $QS_ICON_THEME ]; then
+          export QS_ICON_THEME="Colloid-Dark"
+        fi
         export FONTCONFIG_FILE=${fontconfig pkgs [ fonts ]}
         export PATH="${lib.makeBinPath dependencies}:$PATH"
         export QML2_IMPORT_PATH="${qmlPath pkgs}"
