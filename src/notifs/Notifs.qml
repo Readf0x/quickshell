@@ -1,4 +1,5 @@
 import Quickshell
+import Quickshell.Hyprland
 import Quickshell.Widgets
 import Quickshell.Services.Notifications
 import QtQuick
@@ -7,134 +8,175 @@ import "../lib"
 import "../subclass"
 
 PanelWindow {
-	id: root
+  id: root
 
-	anchors {
-		right: true
-		top: true
-		bottom: true
-	}
+  anchors {
+    right: true
+    top: true
+    bottom: true
+  }
 
-	color: "transparent"
+  color: "transparent"
 
-	implicitWidth: 248
-	exclusiveZone: 0
+  implicitWidth: 248
+  exclusiveZone: 0
 
   mask: Region {
     item: list
   }
 
-	property list<Notification> notifications
+  property list<Notification> notifications
 
-	onNotificationsChanged: {
-		if (notifications.some(n=>n==null)) {
-			notifications = notifications.filter(n=>n!=null)
-		}
-	}
+  onNotificationsChanged: {
+    if (notifications.some(n=>n==null)) {
+      notifications = notifications.filter(n=>n!=null)
+    }
+  }
 
-	NotificationServer {
-		id: server
+  NotificationServer {
+    id: server
 
-		actionsSupported: true
-		bodyHyperlinksSupported: true
-		bodyMarkupSupported: true
-		imageSupported: true
-		persistenceSupported: true
+    actionsSupported: true
+    bodyHyperlinksSupported: true
+    bodyMarkupSupported: true
+    imageSupported: true
+    persistenceSupported: true
 
-		onNotification: notif => {
-			notif.tracked = true
-			root.notifications = [notif, ...root.notifications]
-		}
-	}
+    onNotification: notif => {
+      notif.tracked = true
+      root.notifications = [notif, ...root.notifications]
+    }
+  }
 
-	Column {
+  Column {
     id: list
-		spacing: 4
+    spacing: 4
 
-		anchors {
-			top: parent.top
-			right: parent.right
-			left: parent.left
-			margins: 4
-		}
+    anchors {
+      top: parent.top
+      right: parent.right
+      left: parent.left
+      margins: 4
+    }
 
-		Repeater {
-			id: repeater
-			model: root.notifications
+    Repeater {
+      id: repeater
+      model: root.notifications
 
-			Rectangle {
-				required property Notification modelData
-				width: 240
-				height: notifVertical.height
-				color: Colors.accent
-				radius: 4
-				Column {
-					id: notifVertical
-					width: 230
-					anchors.centerIn: parent
-					topPadding: 3
-					bottomPadding: 3
+      Rectangle {
+        required property Notification modelData
+        width: 240
+        height: notifVertical.height
+        color: Colors.background
+        radius: 4
+        Column {
+          id: notifVertical
+          width: 230
+          anchors.centerIn: parent
+          topPadding: 3
+          bottomPadding: 3
 
-					Item {
-						height: 16
-						width: parent.width
-						IconImage {
-							implicitSize: 16
-							source: Quickshell.iconPath(modelData.appIcon)
-						}
-						FText {
-							anchors.centerIn: parent
-							text: modelData.summary
-							font.pixelSize: 16
-							width: Math.min(190, implicitWidth)
-						}
-						IconImage {
-							anchors {
-								right: parent.right
-							}
-							source: Quickshell.iconPath("dialog-close")
-							implicitSize: 16
-							MouseArea {
-								id: area
-								hoverEnabled: true
-								anchors.fill: parent
-								property color propogatedColor: "transparent"
-								acceptedButtons: Qt.LeftButton
-								onClicked: {
-									let thisNotif = modelData
-									root.notifications = root.notifications.filter(n=>n.id!=thisNotif.id)
-									thisNotif.dismiss()
-								}
-							}
-							Rectangle {
-								color: area.containsMouse ? area.pressed ? Colors.gray : Colors.tgray : "transparent"
-								anchors.fill: parent
-							}
-						}
-					}
+          Item {
+            height: 16
+            width: parent.width
+            IconImage {
+              implicitSize: 16
+              visible: modelData.appIcon != ""
+              source: Quickshell.iconPath(modelData.appIcon)
+            }
+            FText {
+              anchors.centerIn: parent
+              text: modelData.summary
+              font.pixelSize: 16
+              width: Math.min(190, implicitWidth)
+            }
+            IconImage {
+              anchors {
+                right: parent.right
+              }
+              source: Quickshell.iconPath("dialog-close")
+              implicitSize: 16
+              MouseArea {
+                id: area
+                hoverEnabled: true
+                anchors.fill: parent
+                property color propogatedColor: "transparent"
+                acceptedButtons: Qt.LeftButton
+                onClicked: {
+                  let thisNotif = modelData
+                  root.notifications = root.notifications.filter(n=>n.id!=thisNotif.id)
+                  thisNotif.dismiss()
+                }
+              }
+              Rectangle {
+                color: area.containsMouse ? area.pressed ? Colors.gray : Colors.tgray : "transparent"
+                anchors.fill: parent
+              }
+            }
+          }
 
-					RowLayout {
-						width: parent.width
-						Image {
-							source: modelData.image
-							visible: source != ""
-							Layout.preferredHeight: 30
+          RowLayout {
+            width: parent.width
+            spacing: 4
+            Image {
+              source: modelData.image
+              visible: source != ""
+              Layout.preferredHeight: 30
               Layout.preferredWidth: Math.min(60,
                 (sourceSize.width / sourceSize.height) * Layout.preferredHeight)
-						}
-						FText {
-							textFormat: Text.StyledText
-							Layout.fillWidth: true
+            }
+            FText {
+              textFormat: Text.StyledText
+              Layout.fillWidth: true
 
-							text: modelData.body
-							font.pixelSize: 14
-							wrapMode: Text.Wrap
-							maximumLineCount: 3
-						}
-					}
-				}
-			}
-		}
-	}
+              text: modelData.body
+              font.pixelSize: 14
+              wrapMode: Text.Wrap
+              maximumLineCount: 3
+            }
+          }
+
+          RowLayout {
+            visible: modelData.actions.length > 0
+            width: parent.width
+
+            spacing: 4
+
+            Repeater {
+              model: modelData.actions
+
+              MouseArea {
+                Layout.preferredHeight: 18
+                Layout.fillWidth: true
+                hoverEnabled: true
+                onClicked: {
+                  modelData.invoke()
+                }
+                Rectangle {
+                  anchors.fill: parent
+                  color: parent.containsMouse ? parent.pressed ? Colors.light : Colors.tlight : Colors.accent
+                  radius: 2
+                  FText {
+                    anchors.centerIn: parent
+                    text: modelData.text
+                  }
+                }
+              }
+            }
+          }
+        }
+        MouseArea {
+          anchors.fill: parent
+          id: fullArea
+          onClicked: {
+            let thisNotif = modelData
+            Hyprland.dispatch(`focuswindow class:${thisNotif.appName}`)
+            root.notifications = root.notifications.filter(n=>n.id!=thisNotif.id)
+            thisNotif.dismiss()
+          }
+        }
+      }
+    }
+  }
 }
 
