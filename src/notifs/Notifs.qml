@@ -69,6 +69,16 @@ PanelWindow {
         height: notifVertical.height
         color: Colors.background
         radius: 4
+        MouseArea {
+          anchors.fill: parent
+          id: fullArea
+          onClicked: {
+            let thisNotif = modelData
+            Hyprland.dispatch(`focuswindow class:${thisNotif.appName}`)
+            root.notifications = root.notifications.filter(n=>n.id!=thisNotif.id)
+            thisNotif.dismiss()
+          }
+        }
         Column {
           id: notifVertical
           width: 230
@@ -137,8 +147,10 @@ PanelWindow {
           }
 
           RowLayout {
+            id: actions
             visible: modelData.actions.length > 0
             width: parent.width
+            property var thisNotif: modelData
 
             spacing: 4
 
@@ -151,6 +163,8 @@ PanelWindow {
                 hoverEnabled: true
                 onClicked: {
                   modelData.invoke()
+                  root.notifications = root.notifications.filter(n=>n.id!=actions.thisNotif.id)
+                  actions.thisNotif.dismiss()
                 }
                 Rectangle {
                   anchors.fill: parent
@@ -163,16 +177,6 @@ PanelWindow {
                 }
               }
             }
-          }
-        }
-        MouseArea {
-          anchors.fill: parent
-          id: fullArea
-          onClicked: {
-            let thisNotif = modelData
-            Hyprland.dispatch(`focuswindow class:${thisNotif.appName}`)
-            root.notifications = root.notifications.filter(n=>n.id!=thisNotif.id)
-            thisNotif.dismiss()
           }
         }
       }
