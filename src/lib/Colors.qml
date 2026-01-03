@@ -12,6 +12,7 @@ Singleton {
   readonly property color light:      "#7fd3c6aa"
   readonly property color tgray:      "#3f2d353b"
   readonly property color tlight:     "#3fd3c6aa"
+  readonly property color flight:     "#807E73"
   readonly property color accent:     "#343F44"
 }
 
