@@ -1,5 +1,4 @@
 import Quickshell
-import Quickshell.Io
 import Quickshell.Hyprland
 import Quickshell.Widgets
 import Quickshell.Services.Notifications
@@ -40,6 +39,12 @@ Rectangle {
     }
   }
 
+  onNotificationChanged: {
+    if (root.notification == null) {
+      remove(1)
+    }
+  }
+
   RetainableLock {
     id: lock
     object: root.notification
@@ -55,24 +60,13 @@ Rectangle {
       }
       let window = Hyprland.toplevels.values.find(t=>t.lastIpcObject.class == notification.appName || t.title == notification.appName)
       if (window) {
-        console.log(`workspace ${window.workspace.name}`)
         Hyprland.dispatch(`workspace ${window.workspace.name}`)
-        console.log(`focuswindow address:0x${window.address}`)
-        focuswindow.focus(window.address)
+        Hyprland.dispatch(`focuswindow address:0x${window.address}`)
       }
       root.remove()
     }
   }
 
-  Process {
-    id: focuswindow
-    command: ["hyprctl", "dispatch", "focuswindow", "address:0x0"]
-    function focus(id) {
-      this.command[3] = `address:0x${id}`
-      this.running = true
-    }
-  }
-  
   Column {
     id: notifVertical
     width: 230
@@ -97,9 +91,10 @@ Rectangle {
       Item {
         anchors {
           right: parent.right
+          verticalCenter: parent.verticalCenter
         }
-        width: 16
-        height: 16
+        width: 24
+        height: 24
         MouseArea {
           id: area
           hoverEnabled: true
@@ -128,6 +123,7 @@ Rectangle {
     RowLayout {
       width: parent.width
       spacing: 4
+      visible: root.notification.body
       Image {
         source: notification.image
         visible: source != ""
