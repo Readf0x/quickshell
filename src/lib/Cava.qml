@@ -7,54 +7,50 @@ import QtQuick
 Singleton {
   id: root
 
-  property list<int> cava: [0,0,0,0,0,0,0,0,0,0]
-  property list<var> colors: [
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-    [[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray],[Colors.light_gray, Colors.light_gray]],
-  ]
-
-  function processColors(color, num) {
-    const gradient = [
-      Colors.green,
-      Colors.yellow,
-      Colors.orange,
-      Colors.red
-    ]
-
-    switch (num) {
-      case 0:
-        return [Colors.light_gray, Colors.light_gray];
-      case 1:
-        return [Colors.light_gray, gradient[color]];
-      case 2:
-        return [gradient[color], gradient[color]];
+  property list<int> bars: Array.apply(null, Array(42)).map(()=>{return 0})
+  function scale(targetSize) {
+    const len = bars.length;
+    if (len === targetSize) return bars;
+    
+    const result = new Array(targetSize);
+    const ratio = len / targetSize;
+    
+    if (len > targetSize) {
+      // Downsampling: fast averaging
+      for (let i = 0; i < targetSize; i++) {
+        const start = (i * ratio) | 0;
+        const end = ((i + 1) * ratio) | 0;
+        
+        let sum = 0;
+        for (let j = start; j < end; j++) {
+          sum += bars[j];
+        }
+        result[i] = sum / (end - start);
+      }
+    } else {
+      // Upsampling: fast linear interpolation
+      const r = (len - 1) / (targetSize - 1);
+      
+      for (let i = 0; i < targetSize; i++) {
+        const pos = i * r;
+        const idx = pos | 0;
+        const frac = pos - idx;
+        
+        result[i] = idx === len - 1 
+          ? bars[idx]
+          : bars[idx] + (bars[idx + 1] - bars[idx]) * frac;
+      }
     }
-  }
-
-  function processHeight(num) {
-    return [
-      processColors(0, Math.min(Math.max(num - 6, 0), 2)),
-      processColors(1, Math.min(Math.max(num - 4, 0), 2)),
-      processColors(2, Math.min(Math.max(num - 2, 0), 2)),
-      processColors(3, Math.min(Math.max(num, 0), 2)),
-    ]
+    
+    return result;
   }
 
   Process {
     running: true
-    command: ["cava", "-p", `${System.configPath}/lib/cava.conf`]
+    command: ["cava", "-p", `${Quickshell.env("QS_CONFIG_PATH")}/lib/cava.conf`]
     stdout: SplitParser {
       onRead: data => {
-        root.cava = data.split(";").filter(s=>s!='').map(i=>Number(i))
-        root.colors = root.cava.map(root.processHeight)
+        root.bars = data.split(";").filter(s=>s!='').map(i=>Number(i))
       }
     }
   }
