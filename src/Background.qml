@@ -1,11 +1,14 @@
 import Quickshell
+import Quickshell.Hyprland
 import QtQuick
 import QtQuick.Effects
 import "lib"
 
 PanelWindow {
+  id: root
   property string backgroundImage
   property string foregroundImage
+  readonly property var offset: { return { x: screen.x, y: screen.y }}
 
   anchors {
     top: true
@@ -89,8 +92,8 @@ PanelWindow {
     Image {
       id: foreground
       source: foregroundImage
-      width: parent.width*1.006
-      height: parent.height*1.006
+      width: parent.width*1.03
+      height: parent.height*1.03
       fillMode: Image.PreserveAspectCrop
       property int realX: -(width - parent.width) / 2
       property int realY: -(height - parent.height) / 2
@@ -98,20 +101,19 @@ PanelWindow {
     }
   }
 
-  MouseArea {
-    anchors.fill: parent
-    hoverEnabled: true
-    property int textScale: fgScale * 2
-    property int fgScale: 200
+  property int textScale: fgScale * 2
+  property int fgScale: 200
 
-    function paralax(item, scale) {
-      item.x = (item.realX+parent.width/(scale*2)) - (mouseX/scale)
-      item.y = (item.realY+parent.height/(scale*2)) - (mouseY/scale)
-    }
+  function paralax(item, scale, pos) {
+    item.x = (item.realX+root.width/(scale*2)) - ((pos.x-offset.x)/scale)
+    item.y = (item.realY+root.height/(scale*2)) - ((pos.y-offset.y)/scale)
+  }
 
-    onPositionChanged: {
-      paralax(timeText, textScale)
-      paralax(foreground, fgScale)
+  Connections {
+    target: Cursor
+    function onCursorposChanged() {
+      paralax(timeText, textScale, Cursor.cursorpos)
+      paralax(foreground, fgScale, Cursor.cursorpos)
     }
   }
 }
