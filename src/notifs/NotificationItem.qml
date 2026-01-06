@@ -32,6 +32,20 @@ Rectangle {
     }
   }
 
+  readonly property list<string> activators: [
+    "View",
+    "Activate"
+  ]
+  function activateIncludes(str: string): bool {
+    return activators.includes(str)
+  }
+  function activateFilter(actions: list<NotificationAction>): list<NotificationAction> {
+    return actions.filter(a=>!activateIncludes(a))
+  }
+  function activateFind(actions: list<NotificationAction>): NotificationAction {
+    actions.find(a=>activateIncludes(a))
+  }
+
   Connections {
     target: notification
     function onClosed(reason) {
@@ -55,8 +69,8 @@ Rectangle {
     anchors.fill: parent
     id: fullArea
     onClicked: {
-      if (notification.actions.length > 0 && notification.actions.some(a=>a.text == "View")) {
-        notification.actions.find(a=>a.text == "View").invoke()
+      if (notification.actions.length > 0 && notification.actions.some(a=>activateIncludes(a))) {
+        notification.actions.find(a=>activateIncludes(a)).invoke()
       }
       let window = Hyprland.toplevels.values.find(t=>t.lastIpcObject.class == notification.appName || t.title == notification.appName)
       if (window) {
@@ -144,13 +158,14 @@ Rectangle {
 
     RowLayout {
       id: actions
-      visible: notification.actions.filter(a=>a.text != "View").length > 0
+      readonly property list<NotificationAction> filtered: activateFilter(notification.actions)
+      visible: filtered.length > 0
       width: parent.width
 
       spacing: 4
 
       Repeater {
-        model: notification.actions
+        model: filtered
 
         MouseArea {
           Layout.preferredHeight: 18
