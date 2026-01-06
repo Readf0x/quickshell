@@ -3,6 +3,7 @@ import QtQuick
 import "panel"
 import "volume"
 import "notifs"
+import "launcher"
 
 ShellRoot {
   Panel {
@@ -19,5 +20,7 @@ ShellRoot {
   }
   Notifs {}
   Volume {}
+
+  Launcher {}
 }
 
