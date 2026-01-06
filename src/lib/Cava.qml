@@ -7,12 +7,30 @@ import QtQuick
 Singleton {
   id: root
 
-  property list<int> bars: Array.apply(null, Array(42)).map(()=>{return 0})
+  property list<int> bars: Array.apply(null, Array(512)).map(()=>{return 0})
+  property var _arrayPool: []
+  readonly property int maxPoolSize: 10
+
+  function getArray(size) {
+    if (_arrayPool.length > 0) {
+      const arr = _arrayPool.pop()
+      arr.length = size
+      return arr
+    }
+    return new Array(size)
+  }
+
+  function returnArray(arr) {
+    if (_arrayPool.length < maxPoolSize) {
+      _arrayPool.push(arr)
+    }
+  }
+
   function scale(targetSize) {
     const len = bars.length;
     if (len === targetSize) return bars;
     
-    const result = new Array(targetSize);
+    const result = getArray(targetSize)
     const ratio = len / targetSize;
     
     if (len > targetSize) {
@@ -42,7 +60,9 @@ Singleton {
       }
     }
     
-    return result;
+    // Schedule array return for next frame
+    Qt.callLater(() => returnArray(result))
+    return result.slice() // Return a copy to avoid modifications to pooled array
   }
 
   Process {

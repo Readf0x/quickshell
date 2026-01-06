@@ -4,10 +4,10 @@ import Quickshell
 import QtQuick
 
 Singleton {
-  property date date: clock.date
-  property int seconds: clock.seconds
-  property int hours: clock.hours
-  property int minutes: clock.minutes
+  readonly property date date: clock.date
+  readonly property int seconds: clock.seconds
+  readonly property int hours: clock.hours
+  readonly property int minutes: clock.minutes
 
   SystemClock {
     id: clock

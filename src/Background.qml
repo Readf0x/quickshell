@@ -8,7 +8,7 @@ PanelWindow {
   id: root
   property string backgroundImage
   property string foregroundImage
-  readonly property var offset: { return { x: screen.x, y: screen.y }}
+  readonly property point offset: Qt.point(screen.x, screen.y)
 
   anchors {
     top: true
@@ -43,7 +43,7 @@ PanelWindow {
     Row {
       id: bars
       readonly property int count: Math.floor((parent.width - 50) / 45)
-      width: bars.count*45
+      width: bars.count * 45
       height: parent.height * 0.5
 
       y: parent.height * 0.25
@@ -83,9 +83,9 @@ PanelWindow {
           family: "Cherry Bomb One"
         }
 
-        property int realX: parent.width/42.6
-        property int realY: parent.height/8.3
-        x:realX;y:realY
+        readonly property int realX: parent.width/42.6
+        readonly property int realY: parent.height/8.3
+        x: realX; y: realY
       }
     }
 
@@ -95,18 +95,21 @@ PanelWindow {
       width: parent.width*1.03
       height: parent.height*1.03
       fillMode: Image.PreserveAspectCrop
-      property int realX: -(width - parent.width) / 2
-      property int realY: -(height - parent.height) / 2
-      x:realX;y:realY
+      readonly property int realX: -(width - parent.width) / 2
+      readonly property int realY: -(height - parent.height) / 2
+      x: realX; y: realY
     }
   }
 
-  property int textScale: fgScale * 2
-  property int fgScale: 200
+  readonly property int textScale: fgScale * 2
+  readonly property int fgScale: 200
+
+  readonly property real halfWidth: root.width * 0.5
+  readonly property real halfHeight: root.height * 0.5
 
   function paralax(item, scale, pos) {
-    item.x = (item.realX+root.width/(scale*2)) - ((pos.x-offset.x)/scale)
-    item.y = (item.realY+root.height/(scale*2)) - ((pos.y-offset.y)/scale)
+    item.x = (item.realX + root.width/(scale*2)) - ((pos.x - offset.x)/scale)
+    item.y = (item.realY + root.height/(scale*2)) - ((pos.y - offset.y)/scale)
   }
 
   Connections {

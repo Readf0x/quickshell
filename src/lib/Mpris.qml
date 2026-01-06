@@ -8,12 +8,12 @@ import QtQuick
 Singleton {
   id: root
 
-  property int index
-  property string playerID
-  property MprisPlayer player
-  property list<MprisPlayer> players: Mpris.players.values
-  property list<MprisPlaybackState> playerStates: players.map(p=>p.playbackState)
-  property double progress: player.position / player.length
+  property int index: 0
+  property string playerID: ""
+  property MprisPlayer player: null
+  readonly property list<MprisPlayer> players: Mpris.players.values
+  readonly property list<MprisPlaybackState> playerStates: players.map(p=>p.playbackState)
+  readonly property double progress: player ? (player.position / player.length) : 0.0
 
   property var formatted: {
     let matches = player.trackTitle.match(/(.*) [-—] (.*)/)

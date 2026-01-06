@@ -5,6 +5,10 @@ import "../lib"
 Item {
   id: root
   width: 50; height: 30
+
+  readonly property real _secondsAngle: (Time.seconds / 60) * 2 * Math.PI - Math.PI/2
+  readonly property real _minutesAngle: (Time.minutes / 60) * 2 * Math.PI - Math.PI/2  
+  readonly property real _hoursAngle: ((Time.hours + Time.minutes/60) / 12) * 2 * Math.PI - Math.PI/2
   Image {
     id: face
     anchors {
@@ -34,9 +38,8 @@ Item {
       samples: 4
     }
 
-    function percentToPoint(percent: real, radius: int): list<int> {
-      let theta = (2 * Math.PI * percent) - (Math.PI/2)
-      return [ Math.round(radius * Math.cos(theta)), Math.round(radius * Math.sin(theta)) ]
+    function percentToPoint(angle, radius) {
+      return [ Math.round(radius * Math.cos(angle)), Math.round(radius * Math.sin(angle)) ]
     }
 
     ShapePath {
@@ -49,7 +52,7 @@ Item {
       property int length: 14
 
       PathLine {
-        property list<int> point: hands.percentToPoint(Time.seconds / 60, second.length)
+        property list<int> point: hands.percentToPoint(_secondsAngle, second.length)
         x: point[0] + second.startX
         y: point[1] + second.startY
       }
@@ -65,7 +68,7 @@ Item {
       property int length: 12
 
       PathLine {
-        property list<int> point: hands.percentToPoint(Time.minutes / 60, minute.length)
+        property list<int> point: hands.percentToPoint(_minutesAngle, minute.length)
         x: point[0] + minute.startX
         y: point[1] + minute.startY
       }
@@ -81,7 +84,7 @@ Item {
       property int length: 7
 
       PathLine {
-        property list<int> point: hands.percentToPoint((Time.hours + Time.minutes/60) / 12, hour.length)
+        property list<int> point: hands.percentToPoint(_hoursAngle, hour.length)
         x: point[0] + hour.startX
         y: point[1] + hour.startY
       }

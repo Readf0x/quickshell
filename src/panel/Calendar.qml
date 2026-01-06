@@ -4,7 +4,15 @@ import "../lib"
 import "../subclass"
 
 Row {
+  id: root
   spacing: 4
+
+  readonly property int currentYear: Time.date.getFullYear()
+  readonly property int currentMonth: Time.date.getMonth()
+  readonly property int currentDate: Time.date.getDate()
+  readonly property int daysInMonth: new Date(currentYear, currentMonth + 1, 0).getDate() - 1
+  readonly property int firstDay: new Date(currentYear, currentMonth, 1).getDay()
+  readonly property int weekRow: Math.floor((currentDate - 1 + firstDay) / 7)
   GridLayout {
     id: grid
     anchors {
@@ -19,16 +27,14 @@ Row {
     uniformCellWidths: true
     Repeater {
       id: repeater
-      model: new Date(Time.date.getFullYear(), Time.date.getMonth() + 1, 0).getDate()-1
-      readonly property int firstDay: new Date(Time.date.getFullYear(), Time.date.getMonth(), 1).getDay()
-      readonly property int weekRow: Math.floor((Time.date.getDate() - 1 + firstDay) / 7)
+      model: root.daysInMonth
 
       Rectangle {
-        readonly property bool today: Time.date.getDate()-1 == index
-        readonly property bool currentWeek: Layout.row == repeater.weekRow
+        readonly property bool today: root.currentDate - 1 == index
+        readonly property bool currentWeek: Layout.row == root.weekRow
         Layout.margins: today ? 0 : 1
-        Layout.row: Math.floor((index + repeater.firstDay) / 7)
-        Layout.column: (index + repeater.firstDay) % 7
+        Layout.row: Math.floor((index + root.firstDay) / 7)
+        Layout.column: (index + root.firstDay) % 7
         width: 2; height: 2
         radius: 2
         scale: today ? 2 : 1
@@ -52,10 +58,7 @@ Row {
   }
   FText {
     id: date
-    text: {
-      let date = Time.date.getDate()
-      return `${date < 10 ? '0' : ''}${date}`
-    }
+    text: root.currentDate < 10 ? `0${root.currentDate}` : `${root.currentDate}`
     font.pixelSize: 30
     anchors {
       top: parent.top
@@ -76,7 +79,7 @@ Row {
     }
     PropertyChanges {
       target: grid
-      anchors.topMargin: repeater.weekRow * -5 + 2
+      anchors.topMargin: root.weekRow * -5 + 2
     }
   }
 
