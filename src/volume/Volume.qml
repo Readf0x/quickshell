@@ -1,11 +1,14 @@
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Services.Pipewire
 import QtQuick
 import "../lib"
 
 PanelWindow {
   id: volumeWindow
-  
+
+  WlrLayershell.layer: WlrLayer.Overlay
+
   anchors {
     bottom: true
   }

@@ -70,7 +70,8 @@ Rectangle {
     id: fullArea
     onClicked: {
       if (notification.actions.length > 0 && notification.actions.some(a=>activateIncludes(a))) {
-        notification.actions.find(a=>activateIncludes(a)).invoke()
+        console.log(activateFind(notification.actions).text)
+        activateFind(notification.actions).invoke()
       }
       let window = Hyprland.toplevels.values.find(t=>t.lastIpcObject.class == notification.appName || t.title == notification.appName)
       if (window) {
@@ -165,7 +166,7 @@ Rectangle {
       spacing: 4
 
       Repeater {
-        model: filtered
+        model: parent.filtered
 
         MouseArea {
           Layout.preferredHeight: 18

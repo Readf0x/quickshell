@@ -1,9 +1,12 @@
 import Quickshell
+import Quickshell.Wayland
 import Quickshell.Services.Notifications
 import QtQuick
 
 PanelWindow {
   id: root
+
+  WlrLayershell.layer: WlrLayer.Overlay
 
   anchors {
     right: true
